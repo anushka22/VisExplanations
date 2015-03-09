@@ -1,0 +1,248 @@
+\begin{thebibliography}{10}
+
+\bibitem{Albuquerque2010}
+G.~Albuquerque, M.~Eisemann, D.~Lehmann, H.~Theisel, and M.~Magnor.
+\newblock Improving the visual analysis of high-dimensional datasets using
+  quality measures.
+\newblock In {\em Visual Analytics Science and Technology (VAST), 2010 IEEE
+  Symposium on}, pages 19--26, Oct 2010.
+
+\bibitem{Amar2004}
+R.~Amar and J.~Stasko.
+\newblock A knowledge task-based framework for design and evaluation of
+  information visualizations.
+\newblock In {\em Proceedings of the IEEE Symposium on Information
+  Visualization}, pages 143--150, 2004.
+
+\bibitem{Ankerst1998}
+M.~Ankerst, S.~Berchtold, and D.~A. Keim.
+\newblock Similarity clustering of dimensions for an enhanced visualization of
+  multidimensional data.
+\newblock In {\em Information Visualization, 1998. Proceedings. IEEE Symposium
+  on}, pages 52--60. IEEE, 1998.
+
+\bibitem{Becker1996}
+R.~A. Becker, W.~S. Cleveland, and M.-J. Shyu.
+\newblock The visual design and control of trellis display.
+\newblock {\em Journal of computational and Graphical Statistics},
+  5(2):123--155, 1996.
+
+\bibitem{Bertin1983}
+J.~Bertin.
+\newblock {\em Semiology of Graphics}.
+\newblock University of Wisconsin Press, 1983.
+
+\bibitem{Bertini2006}
+E.~Bertini and G.~Santucci.
+\newblock Give chance a chance: modeling density to enhance scatter plot
+  quality through random data sampling.
+\newblock {\em Information Visualization}, 5(2):95--110, 2006.
+
+\bibitem{Bertini2011}
+E.~Bertini, A.~Tatu, and D.~Keim.
+\newblock Quality metrics in high-dimensional data visualization: an overview
+  and systematization.
+\newblock {\em Visualization and Computer Graphics, IEEE Transactions on},
+  17(12):2203--2212, 2011.
+
+\bibitem{Boukhelifa2013}
+N.~Boukhelifa, W.~Cancino, A.~Bezerianos, and E.~Lutton.
+\newblock Evolutionary visual exploration: Evaluation with expert users.
+\newblock {\em Computer Graphics Forum}, 32(3pt1):31--40, 2013.
+
+\bibitem{Buja2009}
+A.~Buja, D.~Cook, H.~Hofmann, M.~Lawrence, E.-K. Lee, D.~F. Swayne, and
+  H.~Wickham.
+\newblock Statistical inference for exploratory data analysis and model
+  diagnostics.
+\newblock {\em Philosophical Transactions of the Royal Society of London A:
+  Mathematical, Physical and Engineering Sciences}, 367(1906):4361--4383, 2009.
+
+\bibitem{Cui2006}
+Q.~Cui, M.~O. Ward, E.~A. Rundensteiner, and J.~Yang.
+\newblock Measuring data abstraction quality in multiresolution visualizations.
+\newblock {\em Visualization and Computer Graphics, IEEE Transactions on},
+  12(5):709--716, 2006.
+
+\bibitem{Dang2014}
+T.~N. Dang and L.~Wilkinson.
+\newblock Scagexplorer: Exploring scatterplots by their scagnostics.
+\newblock In {\em Pacific Visualization Symposium (PacificVis), 2014 IEEE},
+  pages 73--80, March 2014.
+
+\bibitem{Dasgupta2010}
+A.~Dasgupta and R.~Kosara.
+\newblock Pargnostics: Screen-space metrics for parallel coordinates.
+\newblock {\em Visualization and Computer Graphics, IEEE Transactions on},
+  16(6):1017--1026, 2010.
+
+\bibitem{Friedman1974}
+J.~H. Friedman and J.~W. Tukey.
+\newblock {A Projection Pursuit algorithm for exploratory data analysis}.
+\newblock {\em IEEE Trans. on computers}, 23(9):881--890, 1974.
+
+\bibitem{Guo2006}
+D.~Guo, J.~Chen, A.~M. MacEachren, and K.~Liao.
+\newblock A visualization system for space-time and multivariate patterns
+  (vis-stamp).
+\newblock {\em Visualization and Computer Graphics, IEEE Transactions on},
+  12(6):1461--1474, 2006.
+
+\bibitem{Johansson2009}
+S.~Johansson and J.~Johansson.
+\newblock Interactive dimensionality reduction through user-defined
+  combinations of quality metrics.
+\newblock {\em Visualization and Computer Graphics, IEEE Transactions on},
+  15(6):993--1000, 2009.
+
+\bibitem{Kandel2012}
+S.~Kandel, R.~Parikh, A.~Paepcke, J.~M. Hellerstein, and J.~Heer.
+\newblock Profiler: Integrated statistical analysis and visualization for data
+  quality assessment.
+\newblock In {\em Proceedings of the International Working Conference on
+  Advanced Visual Interfaces}, pages 547--554. ACM, 2012.
+
+\bibitem{Lehmann2015}
+D.~Lehmann, S.~Hundt, and H.~Theisel.
+\newblock A study on quality metrics vs\. human perceptions: {C}an visual
+  measures help us to filter visualizations of interest?
+\newblock {\em Information Technology}, 57(1):11--21, 2015.
+
+\bibitem{Lunzer2010}
+A.~Lunzer, R.~Belleman, P.~Melis, and G.~Stamatakos.
+\newblock Preparing, exploring and comparing cancer simulation results within a
+  large parameter space.
+\newblock In {\em Information Visualisation (IV), 2010 14th International
+  Conference}, pages 258--264. IEEE, 2010.
+
+\bibitem{Maceachren2003}
+A.~MacEachren, D.~Xiping, F.~Hardisty, D.~Guo, and G.~Lengerich.
+\newblock Exploring high-d spaces with multiform matrices and small multiples.
+\newblock In {\em Information Visualization, 2003. INFOVIS 2003. IEEE Symposium
+  on}, pages 31--38. IEEE, 2003.
+
+\bibitem{Majumder2013}
+M.~Majumder, H.~Hofmann, and D.~Cook.
+\newblock Validation of visual statistical inference, applied to linear models.
+\newblock {\em Journal of the American Statistical Association},
+  108(503):942--956, 2013.
+
+\bibitem{Munzner2014}
+T.~Munzner.
+\newblock {\em Visualization Analysis and Design}.
+\newblock AK Peters Visualization Series. CRC Press, 2014.
+
+\bibitem{Piringer2008}
+H.~Piringer, W.~Berger, and H.~Hauser.
+\newblock Quantifying and comparing features in high-dimensional datasets.
+\newblock In {\em Information Visualisation, 2008. IV '08. 12th International
+  Conference}, pages 240--245, July 2008.
+
+\bibitem{Sarni2005}
+S.~Sarni, A.~Maciel, R.~Boulic, and D.~Thalmann.
+\newblock A spreadsheet framework for visual exploration of biomedical
+  datasets.
+\newblock In {\em Computer-Based Medical Systems, 2005. Proceedings. 18th IEEE
+  Symposium on}, pages 159--164. IEEE, 2005.
+
+\bibitem{Schafer2013}
+M.~Sch{\"a}fer, L.~Zhang, T.~Schreck, A.~Tatu, J.~A. Lee, M.~Verleysen, and
+  D.~A. Keim.
+\newblock Improving projection-based data analysis by feature space
+  transformations.
+\newblock In {\em IS\&T/SPIE Electronic Imaging}, pages 86540H--86540H.
+  International Society for Optics and Photonics, 2013.
+
+\bibitem{Schneidewind2006}
+J.~Schneidewind, M.~Sips, and D.~A. Keim.
+\newblock Pixnostics: Towards measuring the value of visualization.
+\newblock In {\em Visual Analytics Science And Technology, 2006 IEEE Symposium
+  On}, pages 199--206. IEEE, 2006.
+
+\bibitem{Sedlmair2013}
+M.~Sedlmair, T.~Munzner, and M.~Tory.
+\newblock Empirical guidance on scatterplot and dimension reduction technique
+  choices.
+\newblock {\em {IEEE} Trans. Vis. Comput. Graph.}, 19(12):2634--2643, 2013.
+
+\bibitem{Sedlmair2012}
+M.~Sedlmair, A.~Tatu, T.~Munzner, and M.~Tory.
+\newblock A taxonomy of visual cluster separation factors.
+\newblock {\em Comp. Graph. Forum}, 31(3pt4):1335--1344, June 2012.
+
+\bibitem{Seo2005}
+J.~Seo and B.~Shneiderman.
+\newblock A rank-by-feature framework for interactive exploration of
+  multidimensional data.
+\newblock {\em Information Visualization}, 4(2):96--113, July 2005.
+
+\bibitem{Sips2009}
+M.~Sips, B.~Neubert, J.~P. Lewis, and P.~Hanrahan.
+\newblock Selecting good views of high-dimensional data using class
+  consistency.
+\newblock {\em Computer Graphics Forum}, 28(3):831--838, 2009.
+
+\bibitem{Stolte2002}
+C.~Stolte, D.~Tang, and P.~Hanrahan.
+\newblock Polaris: A system for query, analysis, and visualization of
+  multidimensional relational databases.
+\newblock {\em IEEE Trans. Vis. Comput. Graph.}, 8(1):52--65, 2002.
+
+\bibitem{Tatu2009}
+A.~Tatu, G.~Albuquerque, M.~Eisemann, J.~Schneidewind, H.~Theisel, M.~Magnor,
+  and D.~Keim.
+\newblock Combining automated analysis and visualization techniques for
+  effective exploration of high-dimensional data.
+\newblock In {\em Visual Analytics Science and Technology, 2009. VAST 2009.
+  IEEE Symposium on}, pages 59--66. IEEE, 2009.
+
+\bibitem{tufte1986}
+E.~R. Tufte.
+\newblock {\em The Visual Display of Quantitative Information}.
+\newblock Graphics Press, Cheshire, CT, USA, 1986.
+
+\bibitem{Tukey1977}
+J.~W. Tukey.
+\newblock {\em Exploratory Data Analysis}.
+\newblock Addison-Wesley, 1977.
+
+\bibitem{Wickham2006}
+H.~Wickham.
+\newblock ggplot: An implementation of the grammar of graphics.
+\newblock {\em R package version 0.4. 0}, 2006.
+
+\bibitem{Wickham2013}
+H.~Wickham, D.~Cook, H.~Hofmann, and A.~Buja.
+\newblock Graphical inference for infovis.
+\newblock {\em IEEE Trans. Vis. Comput. Graph.}, pages 973--979, 2010.
+
+\bibitem{Wilkinson2005GG}
+L.~Wilkinson.
+\newblock {\em The Grammar of Graphics}.
+\newblock Springer-Verlag New York, Inc., 2005.
+
+\bibitem{Wilkinson2005}
+L.~Wilkinson, A.~Anand, and R.~Grossman.
+\newblock Graph-theoretic scagnostics.
+\newblock In {\em Proceedings of the IEEE Symposium on Information
+  Visualization}, pages 157--164, Oct 2005.
+
+\bibitem{Wilkinson2008}
+L.~Wilkinson and G.~Wills.
+\newblock Scagnostics distributions.
+\newblock {\em Journal of Computational and Graphical Statistics},
+  17(2):473--491, 2008.
+
+\bibitem{Wills2010}
+G.~Wills and L.~Wilkinson.
+\newblock Autovis: Automatic visualization.
+\newblock {\em Information Visualization}, 9(1):47--69, 2010.
+
+\bibitem{Yang2003}
+J.~Yang, M.~O. Ward, E.~A. Rundensteiner, and S.~Huang.
+\newblock Visual hierarchical dimension reduction for exploration of high
+  dimensional datasets.
+\newblock In {\em Proceedings of the Symposium on Data Visualisation 2003},
+  pages 19--28, 2003.
+
+\end{thebibliography}

@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2014)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: paper2015.aux
+The style file: abbrv.bst
+Database file #1: paper2015.bib
+Repeated entry---line 469 of file paper2015.bib
+ : @inproceedings{Albuquerque2010
+ :                               ,
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "mackinlay2007"
+You've used 40 entries,
+            2118 wiz_defined-function locations,
+            774 strings with 11406 characters,
+and the built_in function-call counts, 15949 in all, are:
+= -- 1592
+> -- 744
+< -- 15
++ -- 301
+- -- 252
+* -- 1145
+:= -- 2524
+add.period$ -- 129
+call.type$ -- 40
+change.case$ -- 241
+chr.to.int$ -- 0
+cite$ -- 40
+duplicate$ -- 615
+empty$ -- 1241
+format.name$ -- 252
+if$ -- 3426
+int.to.chr$ -- 0
+int.to.str$ -- 40
+missing$ -- 45
+newline$ -- 203
+num.names$ -- 80
+pop$ -- 267
+preamble$ -- 1
+purify$ -- 206
+quote$ -- 0
+skip$ -- 452
+stack$ -- 0
+substring$ -- 1109
+swap$ -- 183
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 150
+warning$ -- 0
+while$ -- 153
+width$ -- 42
+write$ -- 446
+(There was 1 error message)

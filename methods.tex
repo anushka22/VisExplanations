@@ -1,21 +1,54 @@
 \section{Methodology}
-Following the 
 
-splits that are more informative than a random split.
-We set up the following goodness-of-split criteria to guide our work:
+Multivariate explanations as a worldview task~\cite{Amar2004} often not supported by visualization tools. However, their definition is limited in scope to correlation models involving more than two measures...
+
+The goal is to find a Partitioner variable that produces splits of the data that are more informative than random splits. We set up the following goodness-of-split criteria to guide our work:
 \begin{itemize}
-\item Simplicity:
-\item Support: An indicator of the strength of the relationship or visual pattern is the proportion of data points that 
-\item Diversity: Robustness to overfitting?
-\item Degrees of Freedom:
+\item Support: An indicator of the strength of the relationship or visual pattern is the proportion of data points that occur in the split and contribute to the pattern.
+\item Diversity: Robustness to overfitting? The pattern in the splits would be different from the original and from each other. 
+\item Degrees of Freedom: The number of splits captures the dimension of the domain as it is the number of components that fully determine the Partitioner variable's effect on the data being modeled.
 \end{itemize}
 
 \subsection{Metrics}
-The 
-non-parametric
+The appropriate metrics are often determined by the type of plot being used for visual analysis and capture the idea that the visual pattern can be simply described.
+
+\begin{itemize}
+\item Non-parametric
+\item Robust to the number of points
+\item Scale-invariant
+\end{itemize}
+
+We could explore ANOVA type analysis where we compare the means of more than two groups but this assumes that the groups being compared are statistically independent and are balanced in size. We can explain the distribution of observations by splitting the dataset into groups based on the Partitioner such that group is relatively homogenous (has low variance) and the mean of each group is distinct
+
+Mix effects when aggregate numbers are affected by changes in the relative size and value of the subpopulations. Find the confounding covariate, the unexamined field that has an effect on the data pattern.
+
+Considering correlations or slopes from linear regression fits would allow us to consider Simpson's paradox where an aggregate measure contradicts all the subpopulation measures.
+
+Moving towards non-parametric metrics would allow for this Partitioner selection mechanism to be more generally applicable. 
+Entropy does not consider the adjacency pattern in the grid of points. Therefore, a tighter Gaussian pattern is more interesting because it sits in fewer bins.
+
+Graph-theoretic Scagnostics ~\cite{Wilkinson2005} are a non-parametric alternative that considers distributional shape. 
 
 \subsection{Algorithm}
-We bootstrap
+We bootstrap 
 
 
 
+wide range of metrics cite -- can be used w/ our metric
+
+stats...
+visual null hypothesis -- heike 
+effect size paper...
+
+
+different metrics piece-- -- about plot type
+
+random split will have a pattern...misled small amounts of data. 1 example plot. small amount. random split looks like a a pattern.. well inside distribution successful detected not real pattern.
+
+more points...less conservative.
+
+by construction it'll work...proof by demonstration
+obviously generalizes
+
+shingling case -- test this out...
+continuous variables..
