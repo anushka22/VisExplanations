@@ -1,11 +1,11 @@
 \begin{thebibliography}{10}
 
 \bibitem{Albuquerque2010}
-G.~Albuquerque, M.~Eisemann, D.~Lehmann, H.~Theisel, and M.~Magnor.
+G.~Albuquerque, M.~Eisemann, D.~J. Lehmann, H.~Theisel, and M.~Magnor.
 \newblock Improving the visual analysis of high-dimensional datasets using
   quality measures.
 \newblock In {\em Visual Analytics Science and Technology (VAST), 2010 IEEE
-  Symposium on}, pages 19--26, Oct 2010.
+  Symposium on}, pages 19--26. IEEE, 2010.
 
 \bibitem{Amar2004}
 R.~Amar and J.~Stasko.
@@ -20,6 +20,12 @@ M.~Ankerst, S.~Berchtold, and D.~A. Keim.
   multidimensional data.
 \newblock In {\em Information Visualization, 1998. Proceedings. IEEE Symposium
   on}, pages 52--60. IEEE, 1998.
+
+\bibitem{Barlowe2008}
+S.~Barlowe, T.~Zhang, Y.~Liu, J.~Yang, and D.~Jacobs.
+\newblock Multivariate visual explanation for high dimensional datasets.
+\newblock In {\em Visual Analytics Science and Technology, 2008. VAST '08. IEEE
+  Symposium on}, pages 147--154, Oct 2008.
 
 \bibitem{Becker1996}
 R.~A. Becker, W.~S. Cleveland, and M.-J. Shyu.
@@ -205,6 +211,18 @@ E.~R. Tufte.
 J.~W. Tukey.
 \newblock {\em Exploratory Data Analysis}.
 \newblock Addison-Wesley, 1977.
+
+\bibitem{Tukey1982}
+J.~W. Tukey and P.~A. Tukey.
+\newblock Some graphics for studying four-dimensional data.
+\newblock In {\em Computer Science and Statistics: Proceedings of the 14th
+  Symposium on the Interface}, 1982.
+
+\bibitem{Tukey1985}
+J.~W. Tukey and P.~A. Tukey.
+\newblock Computer graphics and explaoratory data analysis: An introduction.
+\newblock In {\em Proceedings of the Sixth Annual Conference and Exposition:
+  Computer Graphics}, 1985.
 
 \bibitem{Wickham2006}
 H.~Wickham.

@@ -1,10 +1,13 @@
 \section{Related Work}
+\label{sec:related}
 In this section, we first summarize previous work in three related areas: visual inference methods, quality metrics for data visualizations and work related to Scagnostics.
 
 \subsection{Visual Inference Methods}
 Bridging the gap between exploratory and confirmatory statistics is work that investigates statistical significance testing in the hypothesis testing of visual findings~\cite{Wickham2013,Majumder2013}. Human subjects are asked whether the observed dataset looks anything like random bootstrapped samples in lineup or Rorschach protocols to enable simulation based statistical inference of visual patterns~\cite{Buja2009}.
 
 "New Procedures for Visualizing Data and Diagnosing Regression Models" by R Menjoge. This is a thesis. Chapter 2 has a very interesting approach using bootstrapping to get a 95\% visual confidence interval for a single plot. It's like the effect size version of Buja's null hypothesis approach. I can't find a published paper other than the thesis.
+
+Multivariate Visual Explanations~\cite{Barlowe2008} explicitly reveal the hidden multivariate relationships in a simple manner to fill the WorldView gap~\cite{Amar2004} in visualization tools that fail to provide support for the discovery of useful correlative relationships in multivariate data. The MVE~\cite{Barlowe2008} approach tightly integrates partial derivatives computation and visual inspection to reveal multivariate correlations and as the structure of interest. We investigate a general approach to multivariate visual explanations that can be used to discover various structures of interest specified by quantitative data visualization quality metrics.
 
 \subsection{Data Visualization Quality Metrics}
 A large number of quality metrics are used in methods for high-dimensional data analysis \cite{Bertini2011}.  Many metrics for scatterplots determine projections of the data to be displayed, often for particular tasks: cluster separation~\cite{Sedlmair2012,Tatu2009}, class consistency and separation~\cite{Sips2009,Schafer2013}, interesting visual shapes~\cite{Wilkinson2005} or statistical properties~\cite{Kandel2012,Seo2005}. Metrics for parallel coordinate plots~\cite{Ankerst1998, Dasgupta2010, Johansson2009, Yang2003} also focus on the ordering of dimensions. Some metrics~\cite{Bertini2006, Cui2006} focus on the level of abstraction, including aggregration and sampling, in these chart types. Others~\cite{Albuquerque2010, Ankerst1998, Schneidewind2006, Yang2003} offer metrics for radial displays, pixel maps, table lens and other visualization types. 

@@ -3,9 +3,11 @@
 \BOOKMARK [2][-]{subsection.2.1}{Visual Inference Methods}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Data Visualization Quality Metrics}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Scagnostics}{section.2}% 5
-\BOOKMARK [1][-]{section.3}{Methodology}{}% 6
-\BOOKMARK [2][-]{subsection.3.1}{Metrics}{section.3}% 7
+\BOOKMARK [1][-]{section.3}{Method}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Split Criteria}{section.3}% 7
 \BOOKMARK [2][-]{subsection.3.2}{Algorithm}{section.3}% 8
-\BOOKMARK [1][-]{section.4}{Examples}{}% 9
-\BOOKMARK [1][-]{section.5}{Extensions}{}% 10
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Handling Continuous Partitioners}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{Multiple Partitioners}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Examples}{}% 11
+\BOOKMARK [1][-]{section.5}{Discussion}{}% 12
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 13

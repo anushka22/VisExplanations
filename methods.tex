@@ -1,54 +1,46 @@
-\section{Methodology}
+\section{Method}
+Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. However, these methods make a number of assumptions about the errors in the model given the sample and about the independence of predictor variables. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to visually interesting different patterns in consecutive steps. 
 
-Multivariate explanations as a worldview task~\cite{Amar2004} often not supported by visualization tools. However, their definition is limited in scope to correlation models involving more than two measures...
+Given a user-selected data relationship that captures the set of dependent variables of interest, we seek to add explanatory variables that help explain the patterns seen in the visual representations. For simplicity, we describe a scenario where the user selects a bivariate relationship of interest and visualizes it as a scatterplot. Adding explanatory variables partitions the scatterplot into multiple plots (small multiples) such that there as many plots as there are discrete categories of a categorical Partitioner or discrete bins of a quantitative Partitioner variable. Therefore, a Partitioner splits or facets a particular visual representation into similar views of subsets of the data. We propose a number of criteria to evaluate the goodness of the splits resulting from adding a Partitioner variable to explain the structure seen in the original visual representation.
 
-The goal is to find a Partitioner variable that produces splits of the data that are more informative than random splits. We set up the following goodness-of-split criteria to guide our work:
+\subsection{Split Criteria}
+We set up the following goodness-of-split criteria to guide our work:
 \begin{itemize}
-\item Support: An indicator of the strength of the relationship or visual pattern is the proportion of data points that occur in the split and contribute to the pattern.
-\item Diversity: Robustness to overfitting? The pattern in the splits would be different from the original and from each other. 
-\item Degrees of Freedom: The number of splits captures the dimension of the domain as it is the number of components that fully determine the Partitioner variable's effect on the data being modeled.
+\item Visually Interesting Pattern: The splits of the  appropriate metrics are often determined by the type of plot being used for visual analysis and capture the idea that the visual pattern can be simply described
+
+\item Diversity: Robustness to overfitting? The pattern in the splits would be different from the original... and from each other. 
+\item Support: An indicator of the strength of the relationship or visual pattern is the proportion of data points that occur in the split and contribute to the pattern. With a small set of points, random split will have a pattern...misled small amounts of data. 1 example plot. small amount. random split looks like a a pattern.. well inside distribution successful detected not real pattern.
+-- more points...less conservative.
+
+\item Degrees of Freedom: The number of splits captures the dimension of the domain as it is the number of components that fully determine the Partitioner's effect on the data being modeled.
 \end{itemize}
 
-\subsection{Metrics}
-The appropriate metrics are often determined by the type of plot being used for visual analysis and capture the idea that the visual pattern can be simply described.
-
-\begin{itemize}
-\item Non-parametric
-\item Robust to the number of points
-\item Scale-invariant
-\end{itemize}
-
-We could explore ANOVA type analysis where we compare the means of more than two groups but this assumes that the groups being compared are statistically independent and are balanced in size. We can explain the distribution of observations by splitting the dataset into groups based on the Partitioner such that group is relatively homogenous (has low variance) and the mean of each group is distinct
-
-Mix effects when aggregate numbers are affected by changes in the relative size and value of the subpopulations. Find the confounding covariate, the unexamined field that has an effect on the data pattern.
-
-Considering correlations or slopes from linear regression fits would allow us to consider Simpson's paradox where an aggregate measure contradicts all the subpopulation measures.
-
-Moving towards non-parametric metrics would allow for this Partitioner selection mechanism to be more generally applicable. 
-Entropy does not consider the adjacency pattern in the grid of points. Therefore, a tighter Gaussian pattern is more interesting because it sits in fewer bins.
-
-Graph-theoretic Scagnostics ~\cite{Wilkinson2005} are a non-parametric alternative that considers distributional shape. 
+Support is dependent on the degrees of freedom criterion as the number of points per split would decrease as the number of splits increase given a constant number of observations to start with.
 
 \subsection{Algorithm}
-We bootstrap 
+We describe the design of an algorithm that constructs good splits given the criteria outlined above. We assume we start with the user specified visual representation of a set of data and seek to split the display into facets that reveal useful visual structure.
+
+Filtering the large number of views of a high-dimensional dataset motivated Tukey's proposal of \textit{cognostics}~\cite{Tukey1982,Tukey1985} - diagnostic metrics to evaluate the usefulness of views - so users would only manually investigate a small set of high-ranked, potentially useful views. As described in Section~\ref{sec:related}, there are numerous metrics to evaluate various view types (from scatterplots to radial views) based on various tasks (from finding outliers to separating classes or groups).
+
+We can explain the distribution of observations by splitting the dataset into groups based on the Partitioner such that each group is relatively homogenous (has low variance) and the mean of each group is distinct. Then we could apply ANOVA to we compare the means of these groups and look for significant differences as indicators of interesting splits. This type of analysis assumes that the groups being compared are statistically independent and are balanced in size which will not be the case for arbitrary categorical fields in datasets. 
+
+Another visual pattern metric could be to use the correlation or slopes from linear regression fits to help distinguish splits where subsets of the data determined by the Partitioner variable have particular linear relationships. This could help in the discovery of confounding covariates, the unexamined fields that have an effect on the data pattern. Simpson's paradox is a classic example of such mix-effects when aggregate numbers are affected by changes in the relative size and value of the subpopulations. 
+
+Going towards non-parametric metrics, visual pattern salience is often captured by entropy on the binned visual representation. However, entropy does not consider the adjacency pattern in the grid of points so a sine wave pattern might be just as interesting a small Gaussian pattern if they sit in the same number of bins. Here, we would like to be able to differentiate visual distinct patterns.
+
+The distributional shape of visual patterns in a scatterplot are quantitatively captured through graph-theoretic scagnostics~\cite{Wilkinson2005}. These metrics have the benefit of being non-parametric and robust to the number of points as they first bin the data. However, when considering robustness, these metrics are not altogether scale-invariant nor do they capture location specifics if we are interested in particular positional patterns. Selecting non-parametric metrics for the visual pattern would allow for a more generally applicable algorithm. 
+
+After selecting a cognostic metric that quantitatively captures the visual pattern of a set of data observations, we use the metric to determine a set of scores for the set of splits that result from applying the facet operator with a particular Partitioner variable. The diversity requirement is captured by comparing the set of scores to a similar set of scores for random splits. Let the Partitioner variable $d_p$ create $k$ splits with sizes $\left\{ {s_1, s_2,...,s_k}\right\}$. We generate $r$ random sets of $k$ splits bootstrapped without replacement from the original data and of the same sizes $\left\{ {s_1, s_2,...,s_k}\right\}$. From these bootstrapped random splits we compute the cognostic on each split and get $k$ distributions of cognostics. We then compare the cognostic metrics from the Partitioner split to these random splits.
+
+The support criterion is triggered in how we determine if the difference in cognostic metrics between the Partitioner splits and random splits is meaningful. The bootstrapped metric distributions function as reference "null distributions" and we apply Chebyshev's inequality to determine how significant the difference of the Partitioner's splits are from random. To account for the observation that the distributions for various cognostics were not Gaussian, we use a non-parametric significance test. Now, for splits of small size $s_i$, there will be a wide spread of values for most cognostics as it is easy to find a pattern with a few points. However, these patterns are not ``real" or significant patterns because of low support and we expect the cognostics for the splits from Partitioner variable to fall within the reference distribution from random splits. This implies that we will be conservative in accepting visual patterns from splits with low support as truly revealing interesting structure. Conversely, cognostics with high support are likely to be meaningful and a significant difference from the reference distribution would mark a split with interesting visual patterns.
+
+We want to penalize a large number of splits as this negatively affects the support and it provides a heavier investment from the user in terms of visual comparisons. The z-score from applying Chebyshev's inequality  penalizes the increase in number of splits $k$ (as $k$ goes to $\infty$, the z-score goes to $0$)
+$$\sum_{i=1}^n \frac{(X_i-\mu_i)^2}{\sigma_i^2}$$
+
+\subsection{Handling Continuous Partitioners}
+Determining discrete splits for a categorical variable is trivial as the observations are naturally partitioned into subsets for each discrete choice the variable offers. For continuous variables, discrete partitions can be created through a binning technique. There are various binning techniques~\cite{Fried-Diach,Sturges} employed in histograms. An alternative binning strategy is one with overlapping bins of roughly equal count called shingles~\cite{Becker1996 ?Cleveland book first??}.
+
+\subsection{Multiple Partitioners}
+Extending the algorithm to pick multiple partitioners -- useful for small multiples/trellis
 
 
-
-wide range of metrics cite -- can be used w/ our metric
-
-stats...
-visual null hypothesis -- heike 
-effect size paper...
-
-
-different metrics piece-- -- about plot type
-
-random split will have a pattern...misled small amounts of data. 1 example plot. small amount. random split looks like a a pattern.. well inside distribution successful detected not real pattern.
-
-more points...less conservative.
-
-by construction it'll work...proof by demonstration
-obviously generalizes
-
-shingling case -- test this out...
-continuous variables..
