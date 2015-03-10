@@ -11,10 +11,56 @@ library(vegan) #---for spantree
 set.seed(1357)
 
 #--------
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+#--------
 getMSRMeasure <- function(d, variables){
 	m = mean(apply(d[,variables], 2, mean, na.rm=TRUE))
 	s = mean(apply(d[,variables], 2, sd, na.rm=TRUE))
-	model = lm(as.formula(paste(variables[1]," ~ .",sep="")), data=d)
+	model = lm(as.formula(paste0(variables[1]," ~ .")), data=d)
 	r = summary(model)$r.squared
 	return(c(mean=m, stdev=s, r2=r))
 }
@@ -65,18 +111,20 @@ getPartitionScores <- function(d, pIndices, variables, r1, r2, N, scoreName){
 	return(groupS)
 }
 #--------
-savePartitionData <- function(d, partitioner, variables, scoreName,rankValue, dscores, oscores, pIndices){
+savePartitionData <- function(d, partitioner, variables, scoreName,rankValue, dscores, oscores, pIndices, pLabels){
 	nplots <- dim(pIndices)[1]
 	ht <- 2*length(nplots)
 	pplots = list()
-	for (i in 1:nplots){
+	for (i in 1:(nplots-1)){
 		sset = d[pIndices[i,1]:pIndices[i,2],]
-		name = paste("V",i,sep="")
-		pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1) + theme(aspect.ratio = 1)
+		name = paste0("V",i)
+		pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1) + theme(aspect.ratio = 1) + theme(plot.margin = unit(c(0,0,0,0), "cm")) + theme(axis.title.x = element_blank()) + theme(axis.text.x=element_blank()) + theme(axis.title.y=element_text(size=7)) + theme(axis.text.y=element_text(size=6)) 
 	}
-#	subPlots <- do.call("grid.arrange", c(pplots,  ncol=1, nrow=nplots))
+	sset = d[pIndices[nplots,1]:pIndices[nplots,2],]
+	name = paste0("V", nplots)
+	pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1) + theme(aspect.ratio = 1) + theme(plot.margin = unit(c(0,0,0,0), "cm")) + theme(axis.title=element_text(size=7)) + theme(axis.text=element_text(size=6)) 
 
-	a = data.frame(cbind(dscores, partitioner=letters[1:nplots]))
+	a = data.frame(cbind(dscores, partitioner=as.vector(pLabels)))
 	mmin = NULL
 	mmax = NULL
 	for (i in 1:dim(dscores)[1]){
@@ -86,29 +134,23 @@ savePartitionData <- function(d, partitioner, variables, scoreName,rankValue, ds
 	a= melt(a, id="partitioner")
 	names(a)[which(names(a)=="partitioner")] = partitioner
 	a$value = as.numeric(a$value)
-	oscores = data.frame(cbind(oscores, partitioner=letters[1:nplots]))
+	oscores = data.frame(cbind(oscores, partitioner=pLabels))
 	names(oscores) = c("values", partitioner)
-
-	#---TODO ---this isn't plotting the correct vlines :S
-	formula =paste(partitioner, "~ .",sep=" ")
-	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + ggtitle(paste("Partitioned by: ",partitioner,sep="")) 
-	subHists <- allHists + facet_grid(formula, scales="free")
-	subHists
-	subHists <- subHists + geom_vline(data=oscores, aes(xintercept=as.numeric(values)), linetype=3, col="red") + geom_text(data=oscores, aes(x=as.numeric(values),y=0,label=as.character(values)), col="red", size=3) 
+	oscores$values = as.numeric(levels(oscores$values)[oscores$values])
 	
-	#---TODO haven't figured out how to plot these together..
-	fpath=paste(path,"simsMaxAbs/",scoreName,"/", rankValue, "-", partitioner, "-", variables[1], "-", variables[2], ".pdf", sep="")
+	formula =paste(partitioner, "~ .",sep=" ")
+	allHists <- ggplot(a, aes(x=value)) + geom_histogram() 
+	subHists <- allHists + facet_grid(formula, scales="free")
+	subHists <- subHists + geom_vline(data=oscores, aes(xintercept=values), linetype=3, col="red") + geom_text(data=oscores, aes(x=values,y=0,label=as.character(round(values,3))), col="red", size=3) +  theme(axis.title=element_text(size=7)) + theme(axis.text=element_text(size=6))
+	#+ ggtitle(paste0("Partitioned by: ",partitioner)) 
+	pplots[["hists"]] <- subHists
+	lout=matrix(c(1:nplots,rep(nplots+1,nplots)), ncol=2, byrow=FALSE)
+	
+	fpath=paste0(path,"simsMaxAbs/",scoreName,"/", rankValue, "-", partitioner, ".pdf")		#, "-", variables[1], "-", variables[2]
 	print(fpath)
 	pdf(fpath)
-	grid.newpage() # Open a new page on grid device
-	pushViewport(viewport(layout = grid.layout(nplots, 1)))
-	for (i in 1:nplots){
-		print(pplots[i], vp = viewport(layout.pos.row = i, layout.pos.col = 1))
-	}
-	print(subHists, vp = viewport(layout.pos.row = 1:nplots, layout.pos.col = 2:2))
+	multiplot(plotlist=pplots, cols=2,layout=lout)
 	dev.off()
-	#g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(4,4), heights=c(ht,ht))
-	#ggsave(, g, width=8,height=ht)
 }
 
 #----------------
@@ -133,17 +175,19 @@ computeKDE <- function(npts, nsplits, x, ptInterest){
 }
 #----------------
 computeShingles <- function(d, partitioner){
-	t=d[complete.cases(d),]
+	d=d[complete.cases(d),]
 	z = equal.count(d[[partitioner]])
 	plot(z)
 	t=levels(z)
 	s <- sort(d[[partitioner]])
 	inds <- NULL
+	labels <- NULL
 	for (i in 1:length(t)){
 		ss = which(s > t[[i]][1] & s < t[[i]][2])
 		inds <- rbind(inds, c(ss[1], ss[length(ss)]))
+		labels <- rbind(labels, paste0(round(as.numeric(t[[i]][1]),2), "--", round(as.numeric(t[[i]][2]),2)))
 	}
-	return(inds)
+	return(list(inds=inds, labels=labels))
 }
 
 #----------------
@@ -159,7 +203,9 @@ computeAllScores <- function(dall, d, partitioner, variables){
 		N <- dim(dall)[1]
 
 		#---split by known partitioner and save scores
-		pIndices <- computeShingles(d, partitioner)
+		res <- computeShingles(d, partitioner)
+		pIndices = res$inds
+		pLabels = res$labels
 		allScores <- getPartitionScores(d, pIndices, variables, r1, r2, N, scoreName)
 		#---Get known partitioner split sizes
 		sizes <- pIndices[,2]-pIndices[,1] + 1
@@ -193,7 +239,7 @@ computeAllScores <- function(dall, d, partitioner, variables){
 			zscores[[v]] <- max(abs(allScores[[v]] - mu)/sdev, na.rm=TRUE)
 			cat("VAR: ",partitioner,"\nv: " , v, " mean: " ,mu, " sdev ", sdev, " zscore: " , zscores[[v]],"\n")
 			#---save partition + ranking
-			savePartitionData(d, partitioner, variables, v, zscores[[v]], scores[[v]], allScores[[v]], pIndices)
+			savePartitionData(d, partitioner, variables, v, zscores[[v]], scores[[v]], allScores[[v]], pIndices, pLabels)
 		}
 	}	#---for scoreName
 }
@@ -208,7 +254,7 @@ datafiles <- c("ourworld.csv", "IPEDS_data.csv", "genClustered.csv", "genDonut.c
 datafiles <- c("baseball2004.csv")
 df = datafiles[1]
 #for (df in datafiles){
-	fname <- paste(path, "data/", df, sep="")
+	fname <- paste0(path, "data/", df)
 	dall <- read.csv(fname, header=TRUE)
 
 	#---make binned fields factors

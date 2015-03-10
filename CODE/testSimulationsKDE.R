@@ -14,7 +14,7 @@ set.seed(1357)
 getMSRMeasure <- function(d, variables){
 	m = mean(apply(d[,variables], 2, mean, na.rm=TRUE))
 	s = mean(apply(d[,variables], 2, sd, na.rm=TRUE))
-	model = lm(as.formula(paste(variables[1]," ~ .",sep="")), data=d)
+	model = lm(as.formula(paste0(variables[1]," ~ .")), data=d)
 	r = summary(model)$r.squared
 	return(c(mean=m, stdev=s, r2=r))
 }
@@ -70,22 +70,21 @@ savePartitionData <- function(d, partitioner, variables, scoreName, groupS, rank
 	mmin = NULL
 	mmax = NULL
 	for (i in 1:dim(dscores)[1]){
-		mmin = rbind(mmin, min(oscores[i,1], min(dscores[i,])))
-		mmax = rbind(mmax, max(oscores[i,1], max(dscores[i,])))
+		mmin = rbind(mmin, min(oscores[i,scoreName], min(dscores[i,])))
+		mmax = rbind(mmax, max(oscores[i,scoreName], max(dscores[i,])))
 	}
 	a= melt(a, id="partitioner")
 	names(a)[which(names(a)=="partitioner")] = partitioner
 	a$value = as.numeric(a$value)
-	oscores = data.frame(cbind(oscores, partitioner=as.character(levels(d[[partitioner]]))))
-	names(oscores)[which(names(oscores)=="partitioner")] = partitioner
 
-	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + geom_vline(data=oscores, aes(xintercept=as.numeric(allScores..v..)), linetype=3, col="red") + geom_text(data=oscores, aes(x=as.numeric(allScores..v..),y=0,label=as.character(round(allScores..v.., 2))), col="red", size=3) + ggtitle(paste("Partitioned by: ",partitioner,sep="")) 
+	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + xlab(paste0(scoreName," scores")) + geom_vline(data=oscores, aes_string(xintercept=scoreName), linetype=3, col="red") + geom_text(data=oscores, aes_string(x=scoreName,y=0,label=paste0("round(",scoreName,",3)")), col="red", size=3) #+ ggtitle(paste0("Partitioned by: ",partitioner)) 
 	subHists <- allHists + facet_grid(formula)
 	subHists
 	
 	ht <- 2*length(levels(d[[partitioner]]))
 	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(4,4), heights=c(ht,ht))
-	ggsave(paste(path,"simsMaxAbs/",scoreName,"/", rankValue, "-", partitioner, "-", variables[1], "-", variables[2], ".pdf", sep=""), g, width=8,height=ht)
+	ggsave(paste0(path,"simsMaxAbs/",scoreName,"/", rankValue, "-", partitioner, ".pdf"), g, width=8,height=ht)	
+	# "-", variables[1], "-", variables[2]
 }
 
 #----------------
@@ -138,7 +137,6 @@ computeAllScores <- function(dall, d, partitioner, variables){
 		#---get scores from simulations
 		scores <-list()		#---each row is one split's worth of sim scores
 		#---get scores aligned
-		#splitNames=NULL
 		on=names(sort(sizes))
 		allScores = allScores[match(on, allScores[[partitioner]]),]
 		for (i in 1:NumSamples){
@@ -146,9 +144,6 @@ computeAllScores <- function(dall, d, partitioner, variables){
 			eg <- eg[,-which(names(eg)== partitioner)]
 			names(eg)[which(names(eg)=="as.factor(gnum)")] <- "randCluster"
 			partScores <- getPartitionScores(eg, "randCluster", variables, r1, r2, N, scoreName)
-			#plot(eg[which(eg$randCluster==6),1:2])
-			#partScores
-			#splitNames = partScores$randCluster
 			for (v in vs){
 				scores[[v]] <- cbind(scores[[v]], partScores[[v]])
 			}
@@ -157,7 +152,6 @@ computeAllScores <- function(dall, d, partitioner, variables){
 		zscores = list()
 		#---loop through the score histograms
 		for (v in vs){
-			#saveScoreHistograms(v, scores, allScores, partitioner, variables, allScores[[partitioner]])
 			mu = apply(scores[[v]],1, mean, na.rm=TRUE)
 			sdev = apply(scores[[v]],1, sd, na.rm=TRUE)
 			zscores[[v]] <- max(abs(allScores[[v]] - mu)/sdev, na.rm=TRUE)
@@ -167,10 +161,7 @@ computeAllScores <- function(dall, d, partitioner, variables){
 			pdata <- cbind(pdata, variable = rep(v, dim(allScores)[1]))
 			pdata$variable <- as.factor(pdata$variable)
 			names(pdata)[which(names(pdata) == v)] <- "value"
-			savePartitionData(d, partitioner, variables, v, pdata, zscores[[v]], scores[[v]], as.data.frame(allScores[[v]]))
-			
-#			x <- scores[[v]]
-#			kde <- computeKDE(dim(x)[2], dim(x)[1], x, allScores[[v]])
+			savePartitionData(d, partitioner, variables, v, pdata, zscores[[v]], scores[[v]], allScores[c(partitioner,v)])
 		}
 	}	#---for scoreName
 }
@@ -182,9 +173,9 @@ computeAllScores <- function(dall, d, partitioner, variables){
 path <- "/Users/aanand/Documents/RESEARCH Notes/RobustScagnostics/"
 datafiles <- c("ourworld.csv", "IPEDS_data.csv", "genClustered.csv", "genDonut.csv", "genMonotonic.csv", "genQuadratic.csv", "genSerial.csv", "genStriatedChopped.csv", "genStriatedLines.csv", "adult.csv", "baseball2004.csv", "BOSTON.csv", "Sample - Superstore Sales.csv")
 
-datafiles <- c("IPEDS_data.csv")#c("baseball2004.csv")
+datafiles <- c("IPEDS_data.csv")
 for (df in datafiles){
-	fname <- paste(path, "data/", df, sep="")
+	fname <- paste0(path, "data/", df)
 	dall <- read.csv(fname, header=TRUE)
 
 	#---make binned fields factors
