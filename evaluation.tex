@@ -15,7 +15,7 @@ To illustrate the ability of our approach to pick out interesting Partitioners b
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=4in,height=4in]{images/15_8918450338241-ACT_Composite_75th_percentile_score_bin.pdf}
+\includegraphics[width=3.5in,height=4in]{images/15_8918450338241-ACT_Composite_75th_percentile_score_bin.pdf}
   \caption{Monotonic}
  \label{fig:monotonic1}
 \end{figure}
@@ -24,7 +24,7 @@ With the Monotonic Scagnostic as the measure to score splits, the highest ranked
 The splits $\left\{{10, 20, 30, NA}\right\}$ have sizes $\left\{{36, 1010, 153, 335}\right\}$. Each histogram on the right shows the distribution of the Monotonic score on the bootstrapped samples of the same size as the facet it is aligned with on the left. The vertical, red, dashed line is a reference line for the score of the visual pattern in the left plot, so it can be visually compared to the reference distribution. In this case the strong Monotonic pattern in bin $30$ is a significant divergence from the expected range of values for the Monotonic score given the dataset and random samples without replacement of size $153$.
 
 \begin{figure}
-\includegraphics[width=4in,height=2.5in]{images/10_3880027387531-Historically_Black_College_or_University.pdf}
+\includegraphics[width=3.5in,height=2.5in]{images/10_3880027387531-Historically_Black_College_or_University.pdf}
   \caption{Outlying}
  \label{fig:outlying1}
 \end{figure}
@@ -35,8 +35,7 @@ Selecting a different Scagnostic measure such as Outlying, ranks a different spl
 Different -- Can it pick out ``confounding variates" such as those that cause Simpson's Paradox?
 
 \subsubsection{Support}
-Low support cases would have low scores.
-support -- small n (ourworld.csv) vs large n. small -> inside distributions so we'll be more conservation in judgements of "real" patterns.
+We expect to be conservative in our assessment of interesting patterns for ones with low support or determined by a small number of points. We see this in Figure~\ref{fig:clumpy1} which shows how patterns with a small number of points score inside the reference distributions.
  1 example plot. small amount. random split looks like a a pattern.. well inside distribution successful detected not real pattern.
 \begin{figure}
  \centering 
@@ -47,7 +46,7 @@ support -- small n (ourworld.csv) vs large n. small -> inside distributions so w
 
 \begin{figure}
 \raggedleft
-\includegraphics[width=3.75in,height=3.5in]{images/2_05954102971921-GOV.pdf}
+\includegraphics[width=3.5in,height=3.5in]{images/2_05954102971921-GOV.pdf}
   \caption{clumpy}
  \label{fig:clumpy1}
 \end{figure}

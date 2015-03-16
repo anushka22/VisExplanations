@@ -1,25 +1,27 @@
 \section{Related Work}
 \label{sec:related}
-In this section, we first summarize previous work in three related areas: visual inference methods, quality metrics for data visualizations and work related to Scagnostics.
+Here we summarize previous work in three areas related to our work: small multiples, visual inference methods and quality metrics for data visualizations.
+
+\subsection{Small Multiples}
+Faceting is a slicing operator~\cite{Wilkinson2005GG, Munzner2014} to split up a dataset into subsets that are examined together. Often these subsets are determined by discrete values of a categorical dimension or bins of a quantitative dimension. The result of faceting is visually expressed as small multiples that are tables of simple views directly depicting comparisons across facets in the data. They increase the number of dimensions that can be easily visually processed and are applied in visual data analysis tools across different application domains such as geography \cite{Guo2006, Maceachren2003} and medicine \cite{Lunzer2010, Sarni2005}. Furthermore, visual analysis tools such as the ggplot2 library in the R language \cite{Wickham2006} and Tableau \cite{Stolte2002} allow users to rapidly generate small multiple visualizations to explore data.  However, with limited prior knowledge about the interaction effects of dimensions in a dataset, finding repetition, change, patterns and structure in complex data using these views is non-trivial. Tableau's Show Me \cite{mackinlay2007} suggests heuristics to lay out effective small multiples based on the data types of dimensions and functional dependencies between dimensions. However, small multiples are not their focus and they do not suggest a method for selecting a dimension to facet on, while that is our focus. 
 
 \subsection{Visual Inference Methods}
+Bootstrap methods introduced in~\cite{Efron1979} have been used extensively in estimating statistical measures of accuracy when analytic methods are too expensive. 
+
 Bridging the gap between exploratory and confirmatory statistics is work that investigates statistical significance testing in the hypothesis testing of visual findings~\cite{Wickham2013,Majumder2013}. Human subjects are asked whether the observed dataset looks anything like random bootstrapped samples in lineup or Rorschach protocols to enable simulation based statistical inference of visual patterns~\cite{Buja2009}.
 
-"New Procedures for Visualizing Data and Diagnosing Regression Models" by R Menjoge. This is a thesis. Chapter 2 has a very interesting approach using bootstrapping to get a 95\% visual confidence interval for a single plot. It's like the effect size version of Buja's null hypothesis approach. I can't find a published paper other than the thesis.
+Menjoge~\cite{Menjoge2010} uses bootstrapping to show sampling variability of a plot by v to get a 95\% visual confidence interval for a single plot. It's like the effect size version of Buja's null hypothesis approach. \textit{Where is that one??}
 
-Multivariate Visual Explanations~\cite{Barlowe2008} explicitly reveal the hidden multivariate relationships in a simple manner to fill the WorldView gap~\cite{Amar2004} in visualization tools that fail to provide support for the discovery of useful correlative relationships in multivariate data. The MVE~\cite{Barlowe2008} approach tightly integrates partial derivatives computation and visual inspection to reveal multivariate correlations and as the structure of interest. We investigate a general approach to multivariate visual explanations that can be used to discover various structures of interest specified by quantitative data visualization quality metrics.
+Multivariate Visual Explanations~\cite{Barlowe2008} explicitly reveal the hidden multivariate relationships in a simple manner to fill the WorldView gap~\cite{Amar2004} in visualization tools that fail to provide support for the discovery of useful correlative relationships in multivariate data. MVE~\cite{Barlowe2008}  tightly integrates partial derivatives computation and visual inspection to reveal multivariate correlations and as the structure of interest. We investigate a general approach to multivariate visual explanations that can be used to discover various structures of interest specified by quantitative data visualization quality metrics.
 
 \subsection{Data Visualization Quality Metrics}
 A large number of quality metrics are used in methods for high-dimensional data analysis \cite{Bertini2011}.  Many metrics for scatterplots determine projections of the data to be displayed, often for particular tasks: cluster separation~\cite{Sedlmair2012,Tatu2009}, class consistency and separation~\cite{Sips2009,Schafer2013}, interesting visual shapes~\cite{Wilkinson2005} or statistical properties~\cite{Kandel2012,Seo2005}. Metrics for parallel coordinate plots~\cite{Ankerst1998, Dasgupta2010, Johansson2009, Yang2003} also focus on the ordering of dimensions. Some metrics~\cite{Bertini2006, Cui2006} focus on the level of abstraction, including aggregration and sampling, in these chart types. Others~\cite{Albuquerque2010, Ankerst1998, Schneidewind2006, Yang2003} offer metrics for radial displays, pixel maps, table lens and other visualization types. 
-
-Tableau's Show Me \cite{mackinlay2007} suggests appropriate chart types based on a set of two or more user-selected data fields. When the user selects a chart type, the system automatically creates a view for that chart type. However, for each chart type there are multiple possible effective views based on different visual mappings and dimension orderings of the selected fields. Our work extends automatic data visualization generation to support small multiples alternatives by determining appropriate visual encodings, level of abstraction and ordering of data fields. We contribute scoring criteria to rank data views considering data properties and visual layout.
 
 
 Rank-by-feature~\cite{Seo2005} (rank all 2D projections). a follow up~\cite{Piringer2008} that claims they do rank-by-feature on subsets and compares subsets. I thought this would be closely related to our work, but I can't figure out what the paper is doing.
 
 Evolutionary selection~\cite{Boukhelifa2013} of linear and nonlinear 2D projections.
 
-\subsection{Scagnostics}
 Graph-theoretic scagnostics~\cite{Wilkinson2005}, Scagnostic distributions~\cite{Wilkinson2008}, ScagExplorer~\cite{Dang2014}
 
 Experimental evaluation~\cite{Lehmann2015} of scagnostics and other metrics, showing that scagnostics best matches human rankings.
