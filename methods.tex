@@ -1,9 +1,11 @@
 \section{Method}
-Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. However, these methods make a number of assumptions about the errors in the model given the sample and about the independence of predictor variables. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to different, visually interesting  patterns in consecutive steps. Also, these regression methods offer globally optimal solutions.
+Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. However, these methods make a number of assumptions about the errors in the model given the sample and about the independence of predictor variables. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to different, visually interesting  patterns in consecutive steps.
 
-Given a user-selected data relationship that captures the set of dependent variables of interest, we seek to add explanatory variables that help explain the patterns seen in the visual representations. For simplicity, we describe a scenario where the user selects a bivariate relationship of interest and visualizes it as a scatterplot. The proposed method could be applied to other view types and associate quality metrics. Adding explanatory variables partitions the scatterplot into multiple plots (small multiples) such that there as many plots as there are discrete categories of a categorical Partitioner or discrete bins of a quantitative Partitioner variable. Therefore, a Partitioner splits or facets a particular visual representation into similar views of subsets of the data. We propose a number of criteria to evaluate the goodness of the splits resulting from adding a Partitioner variable to explain the structure seen in the original visual representation.
+Given a user-selected data relationship that captures the set of dependent variables of interest, we seek to progressively introduce variables that help explain the patterns seen in the visual representations. For simplicity, we describe a scenario where the user selects a bivariate relationship of interest and visualizes it as a scatterplot. The proposed method could be applied to other view types and associated quality metrics. Adding explanatory variables partitions the scatterplot into multiple plots (small multiples) such that there as many plots as there are discrete categories of a categorical Partitioner or discrete bins of a quantitative Partitioner variable. Therefore, a Partitioner splits or facets a particular visual representation into similar views of subsets of the data. We propose a number of criteria to evaluate the goodness of the splits resulting from adding a Partitioner variable to explain the structure seen in the original visual representation.
 
 \subsection{Split Criteria}
+We can handle the complexity of multi-dimensional data analysis by applying the facet operator to conditionally subset data based on a particular dimension across multiple views. Dividing data between views encodes the association between items using spatial proximity which impacts the patterns that are visible.
+
 We set up the following goodness-of-split criteria to guide our work:
 \begin{itemize}
 \item Visually Interesting Pattern: A plot of a data relationship appears useful when it has a visually salient pattern that translates to some simple model of the relationship, for example, a linear trend. There are number of measures to capture patterns of interest based the type of plot being used for visual analysis. A Partitioner variable that produces splits with visually salient patterns, which are potentially useful, showcases a way of slicing the data relationship to reveal interesting structure.
@@ -14,6 +16,24 @@ We set up the following goodness-of-split criteria to guide our work:
 
 \subsection{Algorithm}
 We describe the design of an algorithm that constructs good splits given the criteria outlined above. We assume we start with the user specified visual representation of a set of data and seek to facet the display into splits that reveal useful visual structure.
+
+Choose a T.S. and establish a rejection rule
+that will distinguish the null from the alternative.
+3. Compute the T.S. for the original observations.
+4. Rearrange the observations.
+1. Compute T.S. for the rearranged data.
+2. Compare the T.S. from original observation with the
+ones from re-arranged data
+
+When the parametric assumption (e.g. normal
+distribution of data) is correct, the parametric
+tests (z-, t-, F-tests) are more powerful.
+
+What is the chance of seeing such a large difference in
+treatment means if the drug has no effect?
+
+Permutation test is more computationally
+intensive
 
 \subsubsection{Visual Patterns}
 Filtering the large number of views of a high-dimensional dataset motivated Tukey's proposal of \textit{cognostics}~\cite{Tukey1982,Tukey1985} - diagnostic measures to evaluate the usefulness of views - so users would only manually investigate a small set of high-ranked, potentially useful views. As described in Section~\ref{sec:related}, there are numerous measures to evaluate various view types (from scatterplots to radial views) based on various tasks (from finding outliers to separating classes or groups).
@@ -37,7 +57,7 @@ We want to penalize a large number of splits as this negatively affects the supp
 $$\sum_{i=1}^n \frac{(X_i-\mu_i)^2}{\sigma_i^2}$$
 
 \subsection{Handling Continuous Partitioners}
-Determining discrete splits for a categorical variable is trivial as the observations are naturally partitioned into subsets for each discrete choice the variable offers. For continuous variables, discrete partitions can be created through a binning technique. There are various binning techniques that split a continuous range into disjoint intervals~\cite{Freedman1981,Scott2009} employed in histograms. An alternative binning strategy is one with overlapping bins of roughly equal count called shingles~\cite{Becker1996 ?Cleveland book first??}. The overlap of the intervals increases the resolution with which we can study conditional independence in the same way that moving averages increase the resolution of local behavior at each time point.
+Determining discrete splits for a categorical variable is trivial as the observations are naturally partitioned into subsets for each discrete choice the variable offers. For continuous variables, discrete partitions can be created through a binning technique. There are various binning techniques that split a continuous range into disjoint intervals~\cite{Freedman1981,Scott2009} employed in histograms. An alternative binning strategy is one with overlapping bins of roughly equal count called shingles~\cite{Becker1996 ?Cleveland book first??}. The overlap of the intervals increases the resolution with which we can study conditional independence in the same way that moving averages increase the resolution of local behavior at each time point. e “moving snapshots” of the data across the range of the conditioning variable
 
 \subsection{Multiple Partitioners}
 Small multiples or trellis plots facet a single view into multiple views, each displaying subsets of data conditioned on the variables defining the small multiple. These conditioning or Partitioner variables are combined using cross and nest operators~\cite{Wilkinson2005GG,Stolte2002} to define the layout of the small multiple. Our algorithm could be used to pick Partitioner variables in the transition from a large single view~\cite{van2013} to informative small multiples.
