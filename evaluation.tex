@@ -6,6 +6,14 @@ Something about performance?
 
 \subsection{Examples}
 \subsubsection{Visual Patterns}
+
+Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. However, these methods make a number of assumptions about the errors in the model given the sample and about the independence of  variables. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to different, visually interesting  patterns in consecutive steps.
+
+%We can explain the distribution of observations by splitting the dataset into groups based on the Partitioner such that each group is relatively homogenous (has low variance) and the mean of each group is distinct. 
+
+For ANOVA-type analytic tasks we could pick a cognostic that considers the mean and variance so that a good Split would have partitions that were relatively homogenous and with distinct means. Correlation or statistics from a linear regression fit of linear could be used to find a Split with strong trends. Entropy-based measures on image space find visually salient patterns but are unable to distinguish a sine wave patterns from a Gaussian pattern if the points fall in the same proportion of bins. To differentiate visual distinct patterns, we could employ scagnostics to non-parametrically characterize the distributional shape of visual patterns in a scatterplot.
+
+
 To illustrate the ability of our approach to pick out interesting Partitioners based on different visual patterns, we look at data about American universities and different Scagnostic measures. The Integrated Postsecondary Education Data System (IPEDS) is the primary source for data on colleges, universities, and technical and vocational postsecondary institutions in the United States via the National Center for Education Statistics.\footnote{\url{http://public.tableau.com/s/resources?qt-overview_resources=1}} We are interested in understanding the relationship between the percent of admitted students and the graduation rate of students with Bachelors degrees within $6$ years as in Figure~\ref{fig:original1}. 
 \begin{figure}
  \centering 
@@ -39,8 +47,11 @@ Selecting a different Scagnostic measure such as Outlying, ranks a different spl
 \end{figure}
 
 \subsubsection{Divergence}
-To examine the divergence criterion we investigate whether our approach can pick out ``confounding variates" such as those that cause Simpson's Paradox. The Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG,Wilkinson2008} has such a known relationship when considering the positive correlation between the variables Death\_Rate and Birth\_Rate as seen in Figure~\ref{fig:original2}. We seek to reveal the visual structure by conditioning on variables in the dataset. Of the six categorical variables in the dataset, the one with the largest score using the $R^2$ metric for the goodness of linear fit is the GNP seen in Figure~\ref{fig:r2}. This Partitioner variable pulls apart the group of points/countries negatively correlated in the ``D" category from the strongly positively correlated set of countries in the ``U" category. Also, we see that when we have a small number of points in a split (category $0$), the distribution of scores from random samples is wide and flat as it is easy to infer patterns with a few points but these have low support.
 
+
+%Another visual pattern measure could be to use the correlation or slopes from linear regression fits to help distinguish splits where subsets of the data determined by the Partitioner dimension have particular linear relationships. This could help in the discovery of confounding covariates, the unexamined fields that have an effect on the data pattern. Simpson's paradox is a classic example of such mix-effects when aggregate numbers are affected by changes in the relative size and value of the subpopulations. 
+
+To examine the divergence criterion we investigate whether our approach can pick out ``confounding variates" such as those that cause Simpson's Paradox. The Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG,Wilkinson2008} has such a known relationship when considering the positive correlation between the variables Death\_Rate and Birth\_Rate as seen in Figure~\ref{fig:original2}. We seek to reveal the visual structure by conditioning on variables in the dataset. Of the six categorical variables in the dataset, the one with the largest score using the $R^2$ metric for the goodness of linear fit is the GNP seen in Figure~\ref{fig:r2}. This Partitioner variable pulls apart the group of points/countries negatively correlated in the ``D" category from the strongly positively correlated set of countries in the ``U" category. Also, we see that when we have a small number of points in a split (category $0$), the distribution of scores from random samples is wide and flat as it is easy to infer patterns with a few points but these have low support.
 \begin{figure}
 \raggedleft
 \includegraphics[width=3.5in,height=3.5in]{images/6_79024203387873-GNP.pdf}
@@ -59,33 +70,24 @@ We expect to be conservative in our assessment of interesting patterns for ones 
  \label{fig:r2-leader}
 \end{figure}
 
-\subsubsection{Degrees of Freedom}
+\subsubsection{Parsimonious}
 High-cardinality Partitioners create a large number splits, which likely produce splits with low support as the observations get distributed among more facets. Not happy with this SuperStore example...
-\begin{figure}
- \centering 
-\includegraphics[width=2.25in,height=2.25in]{images/Profit-Shipping_Cost.pdf}
-  \caption{Original interesting bivariate relationship}
- \label{fig:original3}
-\end{figure}
 
-\begin{figure}
-\raggedleft
-\includegraphics[width=3.5in,height=4in]{images/7_64436895673431-Product_Container.pdf}
-  \caption{r2}
- \label{fig:r2}
-\end{figure}
-
-\begin{figure}
-\raggedleft
-\includegraphics[width=3.5in,height=8in]{images/3_67472603496804-Product_Sub_Category.pdf}
-  \caption{r2}
- \label{fig:r2}
-\end{figure}
+\subsubsection{Non-redundannt}
+Discuss the weakness of our approach here.
 
 
 \section{Discussion}
 \label{sec:discussion}
 Our approach of selecting Partitioner variables that showcase interesting visual explanations is generalizable in terms of allowing for a diversity of measures used to capture ``interesting visual structure". The wide range of measures surveyed~\cite{Bertini2011} can be used w/ our method based on the plot type of interest to describe the visual pattern of interest to find when partitioning a view.
+
+When the parametric assumption (e.g. normal
+distribution of data) is correct, the parametric
+tests (z-, t-, F-tests) are more powerful.
+
+Permutation test is more computationally
+intensive
+
 
 Furthermore, we can use this approach of selecting good splits of a data view to guide other multivariate exploratory data analysis applications.
 

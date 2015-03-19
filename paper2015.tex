@@ -70,7 +70,7 @@
 
 %% Paper title.
 
-\title{Automatic Selection of Conditioning Dimensions\\for Small Multiple Displays}
+\title{Automatic Selection of Partitioning Dimensions\\for Small Multiple Displays}
 
 %% This is how authors are specified in the journal style
 
@@ -85,12 +85,12 @@ Justin Talbot is with Tableau Research. E-mail: jtalbot@tableau.com.
  }
 
 %other entries to be set up for journal
-\shortauthortitle{Anand \MakeLowercase{\textit{et al.}}: Automatic Selection of Conditioning Dimensions\\for Small Multiple Displays}
+\shortauthortitle{Anand \MakeLowercase{\textit{et al.}}: Automatic Selection of Partitioning Dimensions\\for Small Multiple Displays}
 %\shortauthortitle{Firstauthor \MakeLowercase{\textit{et al.}}: Paper Title}
 
 %% Abstract section.
 \abstract{
-Conditioning on a continuous or discrete dimension in the data produces a trellis or small multiple plot, a coordinated series of views of high-dimensional data that are easy to interpret. The problem of selecting a conditioning dimension to partition data into subsets such that they provide a visual explanation for the structure seen in a single view involves unguided search given limited prior research and high-dimensional datasets. We describe a set of goodness criteria for partitions resulting from using a particular dimension to condition the original view. Then, we propose a method, based on non-parametric permutation tests, for applying these criteria to evaluate the quality of splits on a number of real-world, high-dimensional datasets. 
+Partitioning on a discrete dimension in the dataset produces a small multiple display, a coordinated series of views of high-dimensional data that are easy to interpret. The problem of selecting a dimension to partition data into subsets such that they provide a visual explanation for the structure seen in a single view involves unguided search given limited prior research and the combinatorics of large numbers of dimensions. We describe a set of goodness criteria for a Split, the collection of partitions resulting from using a particular dimension to partition the original view. Then, we propose a method, based on non-parametric permutation tests, for applying these criteria to evaluate the quality of splits on a number of real-world, high-dimensional datasets. 
 } % end of abstract
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
@@ -110,8 +110,8 @@ Conditioning on a continuous or discrete dimension in the data produces a trelli
 %% Uncomment below to include a teaser figure.
 \teaser{
    \centering
-   %\includegraphics[width=16cm]{CypressView}
-   \caption{(a) A user-provided plot showing a visual pattern of interest---the relationship between acceptance rates and graduation rates at all US colleges. (b) The small multiple display automatically chosen by our algorithm to help explain the pattern. For colleges with very high average ACT scores, there is a strong linear relationship between the two variables. For other colleges, there is no clear relationship.}
+	\includegraphics[width=7in,height=2in]{images/teaser.pdf}
+   \caption{(a) A user-provided plot showing a visual pattern of interest---the relationship between admission rates and graduation rates at all US universities. (b) The small multiple display automatically chosen by our algorithm to help explain the pattern. For universities with very high average ACT scores, there is a strong linear relationship between the two selected dimensions. For other universities, there is no clear relationship.}
 }
 
 %% Uncomment below to disable the manuscript note
