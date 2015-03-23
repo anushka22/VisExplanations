@@ -70,7 +70,7 @@
 
 %% Paper title.
 
-\title{Automatic Selection of Partitioning Dimensions\\for Small Multiple Displays}
+\title{Automatic Selection of Partitioning Variables\\for Small Multiple Displays}
 
 %% This is how authors are specified in the journal style
 
@@ -85,7 +85,7 @@ Justin Talbot is with Tableau Research. E-mail: jtalbot@tableau.com.
  }
 
 %other entries to be set up for journal
-\shortauthortitle{Anand \MakeLowercase{\textit{et al.}}: Automatic Selection of Partitioning Dimensions\\for Small Multiple Displays}
+\shortauthortitle{Anand \MakeLowercase{\textit{et al.}}: Automatic Selection of Partitioning Variables\\for Small Multiple Displays}
 %\shortauthortitle{Firstauthor \MakeLowercase{\textit{et al.}}: Paper Title}
 
 %% Abstract section.
@@ -114,9 +114,19 @@ We demonstrate the effectiveness of our approach on real-world, high-dimensional
 
 %% Uncomment below to include a teaser figure.
 \teaser{
-   \centering
-	\includegraphics[width=6.5in]{images/teaser.pdf}
-   \caption{(a) A user-provided plot showing a visual pattern of interest---the relationship between admission rates and graduation rates at all US universities. (b) The small multiple display automatically chosen by our algorithm to help explain the pattern. For universities with very high average ACT scores, there is a strong linear relationship between the two selected dimensions. For other universities, there is no clear relationship.}
+ \centering 
+	 \begin{subfigure}{2in}
+ 		\includegraphics[height=2in]{images/teaser1.pdf}
+		\caption{}
+		 \label{fig:teaser1}
+	 \end{subfigure}
+	 \begin{subfigure}{5in}
+ 		\includegraphics[height=2in]{images/teaser2.pdf}
+		\caption{}
+		 \label{fig:teaser2}
+	 \end{subfigure}
+   \caption{(a) A user-provided plot showing a visual pattern of interest---the relationship between admission rates and graduation rates at all US universities. (b) The small multiple display automatically chosen by our algorithm to help explain the pattern. For universities with very high average ACT scores, there is a strong linear relationship between the two selected variables. For other universities, there is no clear relationship.}
+ \label{fig:teaser}
 }
 
 %% Uncomment below to disable the manuscript note
