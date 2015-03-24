@@ -1,5 +1,15 @@
 \section{Conclusion \& Future Work}
 
+We developed a method for automatically ranking the small multiple displays created by the possible partitioning variables in a data set. Our method can incorporate a wide range of existing quality metrics for different visualization types, making our approach very general. Our use of a permutation test allows our method to detect and discount non-informative or spurious patterns in small multiple displays.
 
-We explore...
+The framework of our approach---non-parametric tests combined with cognostics---is very general and there is much more work to be done.
 
+Future work: combinations of quality metrics or automatic selection of quality metric, more robust metrics.
+
+Drill down to create small multiples (should also be able to use permutation tests)
+
+Failure case: redundancy between partitioning variables and other variables in the single viz. While exposing highly correlated variables can be useful, it is likely not what the user wants in an effective small multiple display. We need a way to detect this.
+
+Non-parametric approaches allow us to use quality metrics without a closed form distribution, which seems almost essential in evaluating visual patterns. However, these approaches are computational demanding due to the need to recompute the metric on a large number of samples. We need more work in efficient visual metrics.
+
+Launching off point...non-parametric tests such as permutation and bootstrapping have many possible applications in visualization. By further developing the application of these techniques to visualization as well as developing better quality metrics (cognostics) that capture important visual patterns, we can provide visualization users with rich tools that help them explore their data faster and more correctly.
