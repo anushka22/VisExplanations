@@ -7,7 +7,7 @@ Small multiple displays are tables of similar visualizations, where each cell vi
 
 (Need some history of small multiples references here.)
 
-Many popular visual analysis tools can generate small multiple displays, such as the Trellis package in S-Plus~\cite{}, the ggplot2 library in the R language~\cite{Wickham2006}, and the Polaris system~\cite{Stolte2002} (now Tableau). These systems allow users to rapidly generate small multiple visualizations to explore data. However, the tools require users to manually select partitioning variables. Mackinlay's APT system~\cite{} and Tableau's Show Me system~\cite{mackinlay2007} suggests heuristics for effectively laying out small multiples based on the types and functional dependencies in a data set. Users must provide the partitioning variables as input to these algorithms. 
+Many popular visual analysis tools can generate small multiple displays, such as the Trellis package in S-Plus~\cite{Becker1996-manual}, the ggplot2 library in the R language~\cite{Wickham2006}, and the Polaris system~\cite{Stolte2002} (now Tableau). These systems allow users to rapidly generate small multiple displays to explore data. However, the tools require users to manually select partitioning variables. Mackinlay's APT system~\cite{mackinlay1986} and Tableau's Show Me system~\cite{mackinlay2007} suggests heuristics for effectively laying out small multiples based on the data types and functional dependencies in a data set. Users must provide the partitioning variables as input to these algorithms. 
 
 %Small multiple displays have been effectively used in a wide range of analytic domains including geography~\cite{Guo2006, Maceachren2003}, medicine~\cite{Lunzer2010, Sarni2005}, and analysis of designed experiments~\cite{Fuentes2011}.
 
@@ -26,7 +26,6 @@ EvoGraphDice~\cite{Boukhelifa2013} uses evolutionary algorithms and a scagnostic
 AutoVis~\cite{Wills2010} applies scagnostics to make decisions about what to visualize to provide users a first glance at their data, highlighting patterns that statisticians notice when investigating datasets.
 
 %Our work follows their philosophy of providing guidance for data exploration but focused on the problem of selecting conditioning dimensions that reveal structure in a user-selected data relationship. 
-
 
 \subsection{Non-parametric approaches in visualization}
 We use a non-parametric permutation test to rank small multiple displays. Other researchers have explored other uses for non-parametric statistical methods in visualizations.

@@ -9,13 +9,14 @@ and \emph{small multiple displays} (also called collections or trellis displays)
 Unfortunately, as the number of dimensions in the data set grows, neither approach scales well since the number of plots that must be displayed increases quickly. This problem can be addressed by only using a subset of the data dimensions. However, if the user does not know a priori which dimensions might be of interest, this can become a time-consuming exercise in trial and error as the user manually iterates through dimensions to find views that help explain their data. 
 
 In the context of projective displays, there has been substantial work in developing algorithms to automate this process~\cite{Seo2005,Wilkinson2005,Sips2009}.
-Perhaps the most well-known is Scagnostics, introduced by John and Paul Tukey, which uses a set of metrics capturing interesting visual patterns to rank the scatterplots in a SPLOM, guiding users to potentially useful projections of their data~\cite{}.
+Perhaps the most well-known is Scagnostics, introduced by John and Paul Tukey, which uses a set of metrics capturing interesting visual patterns to rank the scatterplots in a SPLOM, guiding users to potentially useful projections of their data~\cite{Tukey1985}.
 %Automated dimensionality reduction techniques~\cite{Friedman1974,Yang2003,Sedlmair2013}, developed in statistics and machine learning, can also be used, though the resulting visualizations can be difficult to interpret since the axes, often linear combinations of dimensions, may not be meaningful to users.
 However, there has been little corresponding work in the automatic selection of conditioning dimensions for small multiple displays. In this paper, we try to address this problem.
 
 %Dividing data between views, in small multiple displays, encodes the association between the subset of data observations in a partition using spatial proximity, which impacts the patterns that are visible.
 
-For example, consider the scatterplot shown in Figure~1(a) which shows the surprisingly complex relationship between acceptance and graduation rates at US universities.
+For example, consider the scatterplot shown in Figure~1(a) which shows the surprisingly complex relationship between acceptance and graduation rates at US universities. 
+\footnote{The Integrated Postsecondary Education Data System (IPEDS) is the primary source for data on colleges, universities, and technical and vocational postsecondary institutions in the United States via the National Center for Education Statistics. \url{http://public.tableau.com/s/resources?qt-overview_resources=1}}
 As shown in Figure~1(b), a small multiple display partitioned on the average ACT score for admits at each university helps explain this pattern.
 For universities with low ACT scores, the graduation rate is low regardless of the admission rate.
 For universities with middle ACT scores, the relationship is roughly Gaussian.

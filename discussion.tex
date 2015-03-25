@@ -1,0 +1,16 @@
+\section{Discussion}
+\label{sec:discussion}
+(Answer potential reviewer's question about how this relates to stepwise regression type methods + feature selection in other methods)
+Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. However, these methods make a number of assumptions about the errors in the model given the sample and about the independence of  variables. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to different, visually interesting  patterns in consecutive steps.
+
+Weaknesses:
+When the parametric assumption (e.g. normal distribution of data) is correct, the parametric tests (z-, t-, F-tests) are more powerful.
+Permutation test is more computationally intensive
+
+can we extend this to guarantee Non-redundanncy?
+
+Decision tree approach of guided EDA.
+
+Trellis displays present a grid of plots of the same type showing the same variables conditioned on a Partitioner variable that determines the subsets of points shown in each plot. TCrucial to the layout of small multiples is the selection of a Partitioner variable to specify faceting into plots by rows and/or columns. This choice can then be repeated to facet the resulting plots further applying crossing and nesting.
+
+
