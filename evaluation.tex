@@ -4,47 +4,50 @@ Here we evaluate how our algorithm satisfies the properties we set up as the goo
 
 \subsection{Visually Rich}
 
-\begin{figure}
- \centering 
-\includegraphics[width=1.5in]{images/linolenic-linoleic.pdf}
-  \caption{User-selected bivariate relationship of two chemicals in the Olive oils dataset.}
- \label{fig:vrich_all}
-\end{figure}
 A visualization of a data relationship appears useful when it has a visually salient pattern that translates to some simple model of the relationship, for example, a linear trend. Visual pattern measures, such as scagnostics that non-parametrically characterize the distributional shape seen in a scatterplot, can distill structure missed by ANOVA based analysis. For example, consider the bivariate relationship between linolenic and linoleic in Figure~\ref{fig:vrich_all} from the olive oils dataset~\cite{Forina1983}, which represents eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There appears to be visually striking clumps and striation patterns overlaid. An analyst might wonder whether these patterns can be isolated and explained by any of the other dimensions in the dataset.
  
 \begin{figure}
  \centering 
-\includegraphics[width=2in]{images/15_2321946775352-region.pdf}
-  \caption{The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate relationship. The olive oils from the Liguria region have clearly distinctive measurement structures of linolenic compared to those from other Regions.}
- \label{fig:vrich_sm}
+	 \begin{subfigure}{1.25in}
+		\includegraphics[width=1.25in]{images/linolenic-linoleic.pdf}
+		  \caption{}
+		 \label{fig:vrich_all}
+	\end{subfigure}
+	 \begin{subfigure}{2.5in}
+		\includegraphics[width=2.5in]{images/15_2321946775352-region.pdf}
+		  \caption{}
+		 \label{fig:vrich_sm}
+	\end{subfigure}
+	  \caption{(a) User-selected bivariate relationship of two chemicals in the Olive oils dataset. (b) The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate relationship. }
 \end{figure}
-Using the Striation scagnostic, our approach ranks the "Region" variable as the best partitioning dimension for isolating such patterns. Figure~\ref{fig:vrich_sm} reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the unique pattern of linoleic values for the Umbria region. This small multiple explains the visually rich patterns seen in Figure~\ref{fig:vrich_all}.
+
+Using the Striation scagnostic, our approach ranks the "Region" variable as the best partitioning dimension for isolating such patterns. Figure~\ref{fig:vrich_sm} reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the distinctive measurement structures of linoleic values for the Umbria region. This small multiple explains the visually rich patterns seen in Figure~\ref{fig:vrich_all}.
 
 \subsection{Informative}
-
-\begin{figure}
- \centering 
-\includegraphics[width=1.5in]{images/DEATH_RT-BIRTH_RT.pdf}
-  \caption{User-selected relationship between birth and death rates for countries around the world.}
- \label{fig:informative_all}
-\end{figure}
 
 When a small multiple display reveals unexpected or different structure than that seen in the original view, it adds to the user's understanding of the dataset. Different visual patterns function as an indicator of the partitioner variable's explanatory power and its independence relative to the response variables being examined.
 
 \begin{figure}
-\centering
-\includegraphics[width=3in,height=2in]{images/6_84034106410344-URBAN.pdf}
-  \caption{The highest ranked small multiple display shows partitions that reveal strong opposite trends that was not seen in the original view.}
- \label{fig:informative_sm}
+ \centering 
+	 \begin{subfigure}{1.25in}
+		\includegraphics[width=1.25in]{images/DEATH_RT-BIRTH_RT.pdf}
+		  \caption{}
+		 \label{fig:informative_all}
+	\end{subfigure}
+	\begin{subfigure}{3in}
+		\includegraphics[width=3in]{images/6_84034106410344-URBAN.pdf}
+		 \label{fig:informative_sm}
+		  \caption{}
+	 \end{subfigure}
+	\begin{subfigure}{3in}
+		\includegraphics[width=3in]{images/2_48595929670884-LEADER.pdf}
+		  \caption{}
+		 \label{fig:informative_sm_big}
+	 \end{subfigure}
+	  \caption{(a) User-selected relationship between birth and death rates for countries around the world. (b) The highest ranked small multiple display shows partitions that reveal strong opposite trends that was not seen in the original view. (c) The lowest ranked small multiple display that reveals interesting correlations but is not parsimonious.}
 \end{figure}
 An illustration of an informative view involves the use of the Monotonic scagnostic  which is the ranked Spearman correlation coefficient and the Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG,Wilkinson2008}. We want to determine how to partition the bivariate relationship between Birth rate and Death rate seen in Figure~\ref{fig:informative_all}. The highest ranked small multiple is that determined by the variable Urban that partitions the data into two categories - city with $40$ points and rural with $17$ points. This variable can be considered a confounding covariate, the unexamined field that has an effect on the data pattern. Figure~\ref{fig:informative_sm} shows that the Birth rate is negatively correlated with Death rate in cities and positively correlated in rural settings. The negative correlation is contrary to the pattern in the original view. As such it is an example of Simpson's paradox when aggregate numbers are affected by changes in the relative size and value of the subpopulations. 
  
-\begin{figure}
-\centering
-\includegraphics[width=3in]{images/2_48595929670884-LEADER.pdf}
-  \caption{The lowest ranked small multiple display that reveals interesting correlations but is not parsimonious}
- \label{fig:informative_sm_big}
-\end{figure}
 Figure~\ref{fig:informative_sm_big} is another informative small multiple display determined by the religion of the Leader of the countries. However, this variable has more partitions and weaker patterns as each has lower support. 
 
 \subsection{Support}
