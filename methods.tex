@@ -17,12 +17,30 @@ We would like our approach to select small multiple displays that have the follo
 
 \subsection{Algorithm}
 
-\begin{figure}
+\begin{figure*}
  \centering 
-\includegraphics[width=1.5in]{images/AGE-MEDV.pdf}
-  \caption{User-selected relationship between the age and median value of houses in Boston.}
- \label{fig:method_original}
-\end{figure}
+    \begin{subfigure}[b]{1.25in}
+        \includegraphics[width=1.25in]{images/AGE-MEDV.pdf}
+        \caption{Input}
+        \label{fig:method_original}
+    \end{subfigure}
+	 \begin{subfigure}[b]{1.25in}
+  		\includegraphics[width=1.25in]{images/sh_INDUS.pdf}
+		\caption{}
+		 \label{fig:method_actual}
+	 \end{subfigure}
+	 \begin{subfigure}[b]{1.25in}
+ 		\includegraphics[width=1.25in]{images/randCluster.pdf}
+		 \label{fig:method_random}
+ 		\caption{}
+	 \end{subfigure}
+	 \begin{subfigure}[b]{2in}
+ 		\includegraphics[width=2in]{images/hist-sh_INDUS.pdf}
+		\caption{}
+		 \label{fig:method_dist}
+	 \end{subfigure}
+   \caption{Illustration of our method of evaluating small multiple displays. (a) Partitions determined by the levels of Industrial growth. (b)Randomly permuted partitions of data. (c) Distribution of Monotonic measures for randomly permuted partitions. The overlaid blue lines are the corresponding Monotonic measures of the partitions determined by Industrial growth in (a).}
+\end{figure*}
 
 %Given a user-selected set of response variables, we want to automatically find a good Split respecting the criteria outlined above. This process of selecting a good Split, adding a conditioning variable to explain the visual structure in a set of data observations when we have many potential such variables, is akin to the model selection process. We evaluate the ``model" a Split determines based not only on the quality of the interesting patterns in partitions, but also, on the simplicity or size of the collection of partitions. Model selection is commonly employed in statistics and data mining to pick a statistical model that fits a sample of data, such as curve fitting or clustering. However, applying such a methodology with cognostics or visual pattern measures studied in the information visualization community has not been explored. We describe an algorithm to apply cognostics to do model selection where a model is determined as the addition of an explanatory variable to a selected set of response variables. 
 
@@ -33,29 +51,6 @@ To understand how this algorithm works, consider the example in Figure~\ref{fig:
 Central to our approach is the use of a cognostic~\cite{Tukey1982,Tukey1985}, a diagnostic measure to evaluate the usefulness of a data. Tukey proposed such the use of such quality measures to filter the large number of views of a high-dimensional dataset. Here, a cognostic is an independent, substitutable piece of the approach and its choice is based on the user's task and interest. For our example with the Boston housing dataset, we use the Monotonic scagnostic~\cite{Wilkinson2005} as our cognostic.
 
 Let the partitioning variable $d_p$ create $k$ partitions with sizes $\left\{ {s_1, s_2,...,s_k}\right\}$. We compute the cognostic on each of these $k$ partitions to get a set of cognostics $\left\{ {c_1, c_2,...,c_k}\right\}$. Figure~\ref{fig:method_actual} shows the small multiple resulting from using the "Industry" variable, which denotes the proportion of non-retail business acres per town, to partition the original view. The partitions, going from the top of the bottom, have sizes $\left\{ {69, 72, 76, 62, 38,189}\right\}$ and Monotonic measures $\left\{ {0.015, 0.0, 0.043, 0.244, 0.168, 0.052}\right\}$. This partitioning reveals the interesting effect of industrial growth on the value of older houses. With low levels of industrial growth, there is no clear relationship between the age and median house value but as the levels of industrial growth increase in a neighborhood, older houses decrease in value.
-
-\begin{figure*}
- \centering 
-	 \begin{subfigure}{1.25in}
- 	\centering 
-  		\includegraphics[width=1.25in]{images/sh_INDUS.pdf}
-		\caption{}
-		 \label{fig:method_actual}
-	 \end{subfigure}
-	 \begin{subfigure}{1.25in}
- 	\centering 
- 		\includegraphics[width=1.25in]{images/randCluster.pdf}
-		 \label{fig:method_random}
- 		\caption{}
-	 \end{subfigure}
-	 \begin{subfigure}{2in}
- 	\centering 
- 		\includegraphics[width=2in]{images/hist-sh_INDUS.pdf}
-		\caption{}
-		 \label{fig:method_dist}
-	 \end{subfigure}
-   \caption{Illustration of our method of evaluating small multiple displays. (a) Partitions determined by the levels of Industrial growth. (b)Randomly permuted partitions of data. (c) Distribution of Monotonic measures for randomly permuted partitions. The overlaid blue lines are the corresponding Monotonic measures of the partitions determined by Industrial growth in (a).}
-\end{figure*}
 
 Then, we generate a random permutation of the original data into $k$ partitions of the same sizes $\left\{ {s_1, s_2,...,s_k}\right\}$ as seen in Figure~\ref{fig:method_random}. We use permutation sampling as we assume our dataset is representative of the population and do not need to compensate, via bootstrapping, for the assumption that it represents a sample from a larger, unexamined population. (NEED MORE HERE). We compute the Monotonic measure on each of these $k$ random partitions. Then we generate $r$ such randomly permuted partitions and corresponding sets of measures to create $k$ distributions of cognostics as seen in Figure~\ref{fig:method_dist}. 
 
