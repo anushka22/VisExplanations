@@ -5,20 +5,18 @@ Here we evaluate how our algorithm satisfies the properties we set up as the goo
 \subsection{Visually Rich}
 
 A visualization of a data relationship appears useful when it has a visually salient pattern that translates to some simple model of the relationship, for example, a linear trend. Visual pattern measures, such as scagnostics that non-parametrically characterize the distributional shape seen in a scatterplot, can distill structure missed by ANOVA based analysis. For example, consider the bivariate relationship between linolenic and linoleic in Figure~\ref{fig:vrich_all} from the olive oils dataset~\cite{Forina1983}, which represents eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There appears to be visually striking clumps and striation patterns overlaid. An analyst might wonder whether these patterns can be isolated and explained by any of the other dimensions in the dataset.
- 
+
 \begin{figure}
  \centering 
-	 \begin{subfigure}{1.25in}
-		\includegraphics[width=1.25in]{images/linolenic-linoleic.pdf}
-		  \caption{}
-		 \label{fig:vrich_all}
-	\end{subfigure}
-	 \begin{subfigure}{2.5in}
-		\includegraphics[width=2.5in]{images/15_2321946775352-region.pdf}
-		  \caption{}
-		 \label{fig:vrich_sm}
-	\end{subfigure}
-	  \caption{(a) User-selected bivariate relationship of two chemicals in the Olive oils dataset. (b) The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate relationship. }
+	\includegraphics[width=1.75in]{images/linolenic-linoleic.pdf}
+	  \caption{User-selected bivariate relationship of two chemicals in the Olive oils dataset. }
+	 \label{fig:vrich_all}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=3.25in]{images/15_729035813077-region.pdf}
+	  \caption{The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate relationship. }
+	 \label{fig:vrich_sm}
 \end{figure}
 
 Using the Striation scagnostic, our approach ranks the "Region" variable as the best partitioning dimension for isolating such patterns. Figure~\ref{fig:vrich_sm} reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the distinctive measurement structures of linoleic values for the Umbria region. This small multiple explains the visually rich patterns seen in Figure~\ref{fig:vrich_all}.
@@ -29,18 +27,18 @@ When a small multiple display reveals unexpected or different structure than tha
 
 \begin{figure}
  \centering 
-	 \begin{subfigure}{1.25in}
-		\includegraphics[width=1.25in]{images/DEATH_RT-BIRTH_RT.pdf}
+	 \begin{subfigure}{1.5in}
+		\includegraphics[width=1.5in]{images/DEATH_RT-BIRTH_RT.pdf}
 		  \caption{}
 		 \label{fig:informative_all}
 	\end{subfigure}
 	\begin{subfigure}{3in}
-		\includegraphics[width=3in]{images/6_84034106410344-URBAN.pdf}
+		\includegraphics[width=3in]{images/7_05653068514253-URBAN.pdf}
 		 \label{fig:informative_sm}
 		  \caption{}
 	 \end{subfigure}
 	\begin{subfigure}{3in}
-		\includegraphics[width=3in]{images/2_48595929670884-LEADER.pdf}
+		\includegraphics[width=3in]{images/2_56911395752061-LEADER.pdf}
 		  \caption{}
 		 \label{fig:informative_sm_big}
 	 \end{subfigure}
@@ -54,7 +52,7 @@ Figure~\ref{fig:informative_sm_big} is another informative small multiple displa
 
 \begin{figure}
 \centering
-\includegraphics[width=3.25in,height=3.25in]{images/support.pdf}
+\includegraphics[width=3.25in,height=3.25in]{images/support-nogrid.pdf}
   \caption{The effect of support on the combined z-scores ranking of partitioning dimensions for the data about American universities. As the number of points in the dataset decrease, the importance of the variable determined by the z-scores decrease too. }
  \label{fig:support}
 \end{figure}
@@ -63,25 +61,25 @@ To examine how conservative our approach is in its assessment of interesting pat
 \subsection{Parsimonious}
   \begin{figure}
     \centering
-    \begin{minipage}[b]{1.5in}
+    \begin{minipage}[b]{1.7in}
        \begin{subfigure}[b]{\linewidth}
-  	\includegraphics[width=0.65in]{images/donut1-donut2.pdf}
+  	\includegraphics[width=0.75in]{images/donut1-donut2.pdf}
       \caption{}
       \label{fig:pars1}
       \end{subfigure}\\[\baselineskip]
       \begin{subfigure}[b]{\linewidth}
-  	\includegraphics[width=1.5in]{images/19_7340782313668-cluster.pdf}
+  	\includegraphics[width=1.65in]{images/19_5065416601259-cluster.pdf}
       \caption{}
       \label{fig:pars2}
       \end{subfigure}
       \begin{subfigure}[b]{\linewidth}
-  	\includegraphics[width=1.5in]{images/8_12377386346542-cluster1.pdf}
+  	\includegraphics[width=1.65in]{images/9_27395081160431-cluster1.pdf}
         \caption{}
       \label{fig:pars3}        
       \end{subfigure}
     \end{minipage}
-    \begin{subfigure}[b]{1.5in}
-	\includegraphics[width=1.5in]{images/5_54820204216055-cluster2.pdf}
+    \begin{subfigure}[b]{1.7in}
+	\includegraphics[width=1.7in]{images/5_12851615653375-cluster2.pdf}
       \caption{}
       \label{fig:pars4}
     \end{subfigure}
