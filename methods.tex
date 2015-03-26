@@ -1,19 +1,29 @@
 \section{Method}
 \label{sec:method}
 
-Our approach assumes that we have been given as input: (1) a user-selected visualization which the user wants to partition into a small multiple display, (2) a quality measure defined on this visualization type that captures patterns of interest to the user, and (3) the data set underlying the visualization which includes additional variables not mapped to visual variables that are potential partitioning variables in a small multiple display. The output of our method is a scoring of the small multiple displays produced by each partitioning variable.
+In this section we propose a new method for automatically selecting good small multiple displays. Our approach takes three inputs from the analyst:
+\begin{enumerate}
+\item a visualization which the user wants to partition into a small multiple display,
+\item a quality measure defined on this visualization type that captures patterns of interest to the user, and
+\item a list of potential partitioning variables.
+\end{enumerate}
+The output is a scoring of the small multiple displays produced by each partitioning variable.
+
+In the following section, we describe desirable properties for small multiple displays that we use to motivate our approach. The next section describes our method in the context of a running example. We then discuss some straightforward extensions to our basic approach.
 
 \subsection{Goodness-of-Split Criteria}
-We would like our approach to select small multiple displays that have the following four properties:
+To guide our approach, we formulated the following four goodness criteria. Partitioning variables should be chosen such that the resulting small multiple displays are:
 \begin{itemize}
 \item \emph{Visually rich}: We want small multiple displays that convey rich visual patterns, as captured by the quality metric provided by the analyst. In contrast to statistical methods, such as ANOVA, which are based on relatively simple summary metrics with closed-form distributions under some assumptions, most visualization quality metrics involve complicated processing and do not follow a known distribution.
 
-\item \emph{Informative}: The purpose of a small multiple display is to help explain patterns in the input visualization. We want our method to pick partitioning variables that are likely to be informative. Partitions that randomly split the data are not useful.
+\item \emph{Informative}: The purpose of a small multiple display is to help explain patterns in the input visualization. We want to prefer partitioning variables that add information to the display, supporting the user in their analysis. Partitions that randomly split the data are not useful since they don't contain any more information than the original plot.
 
-\item \emph{Well-supported}: For some data sets, particularly those with outliers or with a small number of data points, high quality scores can occur by chance. We would like to detect and downweight spurious patterns in such displays.
+\item \emph{Well-supported}: For some data sets, particularly those with outliers or with a small number of data points, strong visual patterns can occur by chance. These spurious patterns are misleading; they appear informative, but are not. We would like to detect and downweight such spurious patterns, guiding analysts to more robust results.
 
 \item \emph{Parsimonious}: A small multiple display with many partitions can be very difficult to read and understand. All things being equal, we want to favor splitting into as few plots as possible, while still providing an informative display.
 \end{itemize}
+
+
 
 \subsection{Algorithm}
 
