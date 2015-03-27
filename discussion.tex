@@ -1,23 +1,14 @@
 \section{Discussion}
 \label{sec:discussion}
 (Answer potential reviewer's question about how this relates to stepwise regression type methods + feature selection in other methods)
-Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. However, these methods make a number of assumptions about the errors in the model given the sample and about the independence of  variables. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to different, visually interesting  patterns in consecutive steps.
+Statistical methods like ridge and lasso regression help automatically select subsets of variables that produce good explanatory models of a set of multivariate observations. Using lasso regression to progressively add explanatory variables assumes interest in a linear model and may not translate to different, visually interesting  patterns in consecutive steps. These methods build up joint models while we are look at pairwise models considering adding one explanatory variable independent of the rest. 
 
-Weaknesses and future work:
+Non-parametric approaches allow us to use quality metrics without a closed form distribution, which seems almost essential in evaluating visual patterns. However, these approaches are computational demanding due to the need to recompute the metric on a large number of samples. We need more work on efficient visual metrics that are robust to the size of samples.
 
-When the parametric assumption (e.g. normal distribution of data) is correct, the parametric tests (z-, t-, F-tests) are more powerful.
-Permutation test is more computationally intensive
+A possible other criteria for a good small multiple display is one that minimizes the redundancy between partitioning variables and selected variables in the original visualization. While exposing highly correlated variables can be useful, it is likely not what the user wants in an effective small multiple display. We need a way to detect this. (NEED an idea/hypothesis here)
 
-Non-parametric approaches allow us to use quality metrics without a closed form distribution, which seems almost essential in evaluating visual patterns. However, these approaches are computational demanding due to the need to recompute the metric on a large number of samples. We need more work in efficient visual metrics.
+We could develop a decision tree based exploratory data analysis interaction mechanism guided by our algorithm. At each decision level, we could apply our algorithm to select a partitioning variable given a single view of the data at that level. This would produce a small multiple display where each component plot could be further partitioned to reveal interesting structure. Considering the tree structure, each choice of a partitioning variable would be conditional on the other previously used variables, as in model selection methods. 
 
-redundancy between partitioning variables and other variables in the single viz. While exposing highly correlated variables can be useful, it is likely not what the user wants in an effective small multiple display. We need a way to detect this.
-
-Decision tree approach of guided EDA.
-
-Trellis displays present a grid of plots of the same type showing the same variables conditioned on a Partitioner variable that determines the subsets of points shown in each plot. TCrucial to the layout of small multiples is the selection of a Partitioner variable to specify faceting into plots by rows and/or columns. This choice can then be repeated to facet the resulting plots further applying crossing and nesting.
-
-Combinations of quality metrics or automatic selection of quality metric, more robust metrics.
-
-Drill down (change level of aggregation) to create small multiples (should also be able to use permutation tests)
+Another key decision in creating small multiples [of aggregated data?] is whether to use a particular variable to partition the original view or to add to the level of detail (roll-up/drill-down). We could employ our approach using permutation tests  to determine whether the visual pattern seen in a view is one due to chance or interesting given the selected level of detail. (NEED better articulation).
 
 
