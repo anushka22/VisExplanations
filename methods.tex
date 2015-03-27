@@ -73,11 +73,8 @@ We randomly permute the assignment of data points to the six partitions to produ
 (NEED: bootstrapping vs. permuting -- something about our sample = population)
 
 \subsection{Extensions}
-Handling Continuous Partitioners
 Determining discrete splits for a categorical variable is trivial as the observations are naturally partitioned into subsets for each discrete choice the variable offers. For continuous variables, discrete partitions can be created through a binning technique. There are various binning techniques that split a continuous range into disjoint intervals~\cite{Freedman1981,Scott2009} employed in histograms. An alternative binning strategy is one with overlapping bins of roughly equal count called shingles~\cite{Becker1996}. The overlap of the intervals increases the resolution with which we can study conditional independence in the same way that moving averages increase the resolution of local behavior at each time point. 
-%Figure~\ref{fig:shingles} shows such “moving snapshots” of the data across the range of the partitioning variable.
 
-%NOT SURE IF THIS FITS HERE STILL OR SHOULD BE IN THE DISCUSSION
-Small multiples or trellis plots facet a single view into multiple views combining partitioning variables using cross and nest operators~\cite{Wilkinson2005GG,Stolte2002}. Our algorithm could be used to progressively pick variables to partition on in the transition from a large single view~\cite{van2013} to informative small multiples.
+We could employ our algorithm progressively to pick partitioning variables to combine using cross and nest operators~\cite{Wilkinson2005GG,Stolte2002} and build up matrices of small multiples. (NEED example??)
 
 
