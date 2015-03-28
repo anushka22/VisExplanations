@@ -54,8 +54,8 @@ Our approach is based on a simple intuition: effective small multiple displays a
 
 Our algorithm works as follows: for a given partitioning variable, we evaluate the cognostic score on each component plot of the resulting small multiple, resulting in a vector of \emph{true} scores. We then repeatedly randomly permute the values of the partitioning variable, assigning each data point to a random partition, and reevaluate the cognostic score for each component plot. These randomized cognostic scores give us a vector of ``null distributions'', reflecting how likely different cognostic scores are to arise just by chance for each plot.
 
-We then compare the true scores to the ``null distributions'' by evaluating a z-score. This gives us a normalized measure that indicates how far the true cognostic is from a random partition. The z-score for each component plot $p_i$ using Chebyshev's inequality is as follows:
-$$zs(p_i) = \frac{(X_i-\mu_i)^2}{\sigma_i^2}$$ 
+We then compare the true scores to the ``null distributions'' by evaluating a z-score. This gives us a normalized measure that indicates how far the true cognostic is from a random partition. The z-score for each component plot $p_i$ is as follows:
+$$zs(p_i) = \frac{(X_i-\mu_i)}{\sigma_i}$$ 
 where $X_i$ is the true score of the $i$-th partition of the $k$ partitions and $\mu_i$ and $\sigma_i$ are the mean and standard deviation of the cognostic measures over the $r$ random permutations for the $i$-th partition.
 
 Finally, to get a score for the whole small multiple display, we use the maximum absolute z-score across all the plots: 
