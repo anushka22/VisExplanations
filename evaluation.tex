@@ -36,26 +36,24 @@ Our second criterion is that we want small multiple displays that reveal informa
 		 \label{fig:informative_all}
 	\end{subfigure}
 	\begin{subfigure}{3in}
-		\includegraphics[width=3in]{images/7_05653068514253-URBAN.pdf}
+		\includegraphics[width=3in]{images/9_95670214716782-GDP.pdf}
 		 \label{fig:informative}
 		  \caption{}
 	 \end{subfigure}
 	\begin{subfigure}{3in}
-		\includegraphics[width=3in]{images/2_56911395752061-LEADER.pdf}
+		\includegraphics[width=3in]{images/3_97529346797117-GROUP.pdf}
 		  \caption{}
-		 \label{fig:informative_sm_big}
+		 \label{fig:not_informative}
 	 \end{subfigure}
 	  \caption{(a) User-selected relationship between birth and death rates for countries around the world. (b) The highest ranked small multiple display shows partitions that reveal strong opposite trends that were not seen in the original view. (c) The lowest ranked small multiple display that reveals interesting correlations but is not parsimonious.}
 \end{figure}
 
-(NOTE: the following text says Monotonic, but the figures saying Correlation? Also, like before, we need an explanation of why it makes sense to use Monotonic/Correlation in this case.)
+An illustration of this behavior involves the Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG}. We want to determine how to partition the scatterplot showing the relationship between birth rate and death rate seen in Figure~\ref{fig:informative_all} to isolate the increasing and decreasing Monotonic patterns that seem to be overlaid. Therefore, we use the Monotonic scagnostic to find informative small multiples. The highest ranked small multiple is that determined by the GDP variable that partitions the data into two categories---``Developed" with $30$ points and ``Emerging" with $27$ points as seen in Figure~\ref{fig:informative}. This partitioning reveals that GDP is a confounding covariate. While the main view shows an overall positive trend between the birth and death rates, the small multiple view shows that in developed regions there is only a strong negative relationship as expected for countries in that category. As shown by the histograms on the right, this informative display arises because the patterns in the small multiple display are substantially different from the patterns we would see in random subsets of the original plot.
 
-An illustration of this behavior involves the use of the Monotonic scagnostic~\cite{Wilkinson2005} and the Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG}. We want to determine how to partition the scatterplot between birth rate and death rate seen in Figure~\ref{fig:informative_all}. The highest ranked small multiple is that determined by the variable ``Urban" that partitions the data into two categories---``city" with $40$ points and ``rural" with $17$ points as seen in Figure~\ref{fig:informative}. This partitioning reveals that ``Urban" is a confounding covariate. While the main view shows a positive correlation between the birth and death rates, the small multiple view shows that in ``city" regions there is actually a strong negative correlation. As shown by the histograms on the right, this informative display arises because the patterns in the small multiple display are substantially different from the patterns we would see in random subsets of the original plot.
+Figure~\ref{fig:not_informative} shows the lowest ranked partitioning variable which is another categorization of world countries. This Group variable produces similar partitions to that of the GDP variable but it isolates the clump of countries in Europe with low birth rates that together do not have a monotonic pattern. This small multiple is interesting but at the cost of parsimony.
 
 %The negative correlation is contrary to the pattern in the original view. As such it is an example of Simpson's paradox when aggregate patterns are affected by changes in the relative size and value of the subpopulations. 
-
-(NOTE: it's not clear what the purpose of this paragraph and figure are. What argument are we making here? I'd expect to see a lower ranked partitioning where the patterns are all similar to the original plot and being able to say ``See this low ranked one clearly isn't very Informative.")
-Figure~\ref{fig:informative_sm_big} is another informative small multiple display determined by the religion of the leader of the countries. However, this variable has more partitions and weaker patterns as each component plot has lower support. 
+%Figure~\ref{fig:informative_sm_big} is another informative small multiple display determined by the religion of the leader of the countries. However, this variable has more partitions and weaker patterns as each component plot has lower support. 
 
 
 \subsection{Support}
@@ -69,12 +67,23 @@ Consider the distributions shown in Figure~\ref{fig:informative_sm_big}, particu
  \label{fig:support}
 \end{figure}
 
-To examine how our algorithm behaves with different amounts of support, we experiment by varying the size of the input data set. Using the US university data set discussed in the introduction, we compute the z-scores for all the partitioning variables in the dataset. Figure~\ref{fig:support} shows these rankings for different data set sizes, generated by randomly subsetting the full data set.
-As can be seen, for small data sets, the scores are small and, except for ACT scores, there is no clear ranking. As the data set grows, we become more confident in the rankings with ``Historically Black College'' and ``Carnegie Classification'' separating from the other variables. The patterns in these small multiple displays are weaker and we correctly require more data to be confident in their ranking.
+To examine how our algorithm behaves with different amounts of support, we experiment by varying the size of the input data set. Using the US university data set discussed in the introduction and the Monotonic scagnostic, we compute the z-scores for all the partitioning variables in the dataset. Figure~\ref{fig:support} shows these rankings for different data set sizes, generated by randomly subsetting the full data set.
+As can be seen, for small data sets, the scores are small and, except for ACT scores, there is no clear ranking. The patterns in these small multiple displays are weaker and we correctly require more data to be confident in their ranking. As the data set grows, we become more confident in the rankings with ``Historically Black College'', seen in Figure~\ref{fig:support1}, and ``Carnegie Classification'', seen in Figure~\ref{fig:support2}, separating from the other variables.
 
-(NOTE: it would be great to show the Historically Black College and Carnegie Classification small multiples to really sell this story.) 
-
-(NOTE: what measure are we using in this example?)
+\begin{figure}
+ \centering 
+ 	 \begin{subfigure}{3.5in}
+		\includegraphics[width=3.5in]{images/Historically_Black_College.pdf}
+		  \caption{}
+		 \label{fig:support1}
+ 	\end{subfigure}
+ 	 \begin{subfigure}{3.5in}
+		\includegraphics[width=3.5in]{images/Carnegie_Classification.pdf}
+		  \caption{}
+		 \label{fig:support2}
+ 	\end{subfigure}
+	\caption{(a) Small multiple defined by the ``Historically Black College" variable. (b) Small multiple defined by the ``Carnegie Classification'' variable}
+\end{figure}
 
 
 \subsection{Parsimonious}
