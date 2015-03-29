@@ -8,27 +8,28 @@ Our first criterion is to prefer small multiple displays that have visually sali
 
 For example, consider the bivariate relationship between linolenic and linoleic in Figure~\ref{fig:vrich_all} from the olive oils dataset~\cite{Forina1983}, which includes eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There appears to be visually striking clumps and striation patterns overlaid. An analyst might wonder whether these patterns can be isolated and explained by any of the other variables in the dataset.
 
-\begin{figure}
+\begin{figure}[t]
  \centering 
 	\includegraphics[width=1.75in]{images/linolenic-linoleic.pdf}
 	  \caption{User-selected bivariate relationship of two chemicals in the Olive oils dataset. }
 	 \label{fig:vrich_all}
 \end{figure}
 
-\begin{figure}
-	\includegraphics[width=3.25in]{images/15_729035813077-region.pdf}
-	  \caption{The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate plot. }
+\begin{figure}[t]
+    \centering
+	\includegraphics[width=3.0in]{images/15_729035813077-region.pdf}
+	  \caption{The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate relationship. }
 	 \label{fig:vrich_sm}
 \end{figure}
 
-To do so, the analyst can use our approach with the Striation scagnostic~\cite{Wilkinson2005} which detects banding of points in a scatterplot. With this cognostic, our approach ranks the ``Region" variable as the best partitioning variable for isolating striated patterns from the $p$ variables in the data set. This is the partitioning shown in the left half of Figure~\ref{fig:vrich_sm}, which reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the distinctive measurement structure of linoleic values for the Umbria region.
+To do so, the analyst can use our approach with the ``Striation'' scagnostic~\cite{Wilkinson2005} which detects banding of points in a scatterplot. With this cognostic, our approach ranks the ``Region" variable as the best partitioning variable for isolating striated patterns from the $p$ variables in the data set. This is the partitioning shown in the left half of Figure~\ref{fig:vrich_sm}, which reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the distinctive measurement structure of linoleic values for the Umbria region.
 
-As before, the right side of Figure~\ref{fig:vrich_sm} shows the true Striation scores for this partitioning in blue and the randomized permutation scores in the black histogram. We can see that our algorithm has identified the striated pattern in Liguria west as being very unlikely to have arisen due to chance. The similar pattern in Liguria east is not picked up by our approach due to an issue with the underlying ``Striation'' scagnostic. We revisit this issue in Section~\ref{}.
+As before, the right side of Figure~\ref{fig:vrich_sm} shows the true ``Striation'' scores for this partitioning in blue and the randomized permutation scores in the black histogram. We can see that our algorithm has identified the striated pattern in Liguria west as being very unlikely to have arisen due to chance. The similar pattern in Liguria east is not picked up by our approach due to an issue with the underlying ``Striation'' scagnostic. We revisit this issue in Section~\ref{sec:discussion}.
 
 \subsection{Informative}
-Our second criterion is that we want small multiple displays that reveal informative structures when compared to the original view. This criterion is incorporated in our algorithm by the comparison between the true cognostic score and that of the randomized permutations. Randomly permuting the partitioning variable results in partitions that are random subsets of the data in the original plot. Visual patterns in these random subsets are likely to be similar to those in the original plot, and thus, not informative. In contrast, a high absolute z-score for the true cognostic value is associated with a small multiple display that shows a pattern \emph{different} from the original plot.
+Our second criterion is that we want small multiple displays that reveal informative structures when compared to the original view. This criterion is incorporated in our algorithm by the comparison between the true cognostic score and that of the randomized permutations. Randomly permuting the partitioning variable results in partitions that are random subsets of the data in the original plot. Visual patterns in this random subset are likely to be similar to those in the original plot, and thus, not informative. In contrast, a high absolute z-score for the true cognostic value is associated with a small multiple plot that shows a pattern \emph{different} from the original plot.
 
-\begin{figure}
+\begin{figure}[t]
  \centering 
 	 \begin{subfigure}{1.5in}
 		\includegraphics[width=1.5in]{images/DEATH_RT-BIRTH_RT.pdf}
@@ -37,10 +38,10 @@ Our second criterion is that we want small multiple displays that reveal informa
 	\end{subfigure}
 	\begin{subfigure}{3in}
 		\includegraphics[width=3in]{images/9_95670214716782-GDP.pdf}
-		  \caption{}
 		 \label{fig:informative}
+		  \caption{}
 	 \end{subfigure}
-	 \begin{subfigure}{3in}
+	\begin{subfigure}{3in}
 		\includegraphics[width=3in]{images/3_97529346797117-GROUP.pdf}
 		  \caption{}
 		 \label{fig:not_informative}
@@ -48,7 +49,7 @@ Our second criterion is that we want small multiple displays that reveal informa
 	  \caption{(a) User-selected relationship between birth and death rates for countries around the world. (b) The highest ranked small multiple display shows partitions that reveal strong opposite trends that were not seen in the original view. (c) The lowest ranked small multiple display that reveals interesting correlations but is not parsimonious.}
 \end{figure}
 
-An illustration of this behavior involves the Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG}. We want to determine how to partition the scatterplot showing the relationship between birth rate and death rate seen in Figure~\ref{fig:informative_all} to isolate the increasing and decreasing trends that seem to be overlaid. So, we use the Monotonic scagnostic~\cite{Wilkinson2005} to find informative small multiples. The highest ranked small multiple is that determined by the GDP variable that partitions the data into two categories---``Developed" with $30$ points and ``Emerging" with $27$ points as seen in Figure~\ref{fig:informative}. This partitioning reveals that GDP is a confounding covariate. While the main view shows an overall positive trend between the birth and death rates, the small multiple display shows that in developed regions there is only a strong negative relationship as expected for countries in that category. As shown by the histograms on the right, this informative display arises because the patterns in the small multiple display are substantially different from the patterns we would see in random subsets of the original plot.
+An illustration of this behavior involves the Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG}. We want to determine how to partition the scatterplot showing the relationship between birth rate and death rate seen in Figure~\ref{fig:informative_all} to isolate the increasing and decreasing Monotonic patterns that seem to be overlaid. Therefore, we use the Monotonic scagnostic to find informative small multiples. The highest ranked small multiple is that determined by the GDP variable that partitions the data into two categories---``Developed" with $30$ points and ``Emerging" with $27$ points as seen in Figure~\ref{fig:informative}. This partitioning reveals that GDP is a confounding covariate. While the main view shows an overall positive trend between the birth and death rates, the small multiple view shows that in developed regions there is only a strong negative relationship as expected for countries in that category. As shown by the histograms on the right, this informative display arises because the patterns in the small multiple display are substantially different from the patterns we would see in random subsets of the original plot.
 
 Figure~\ref{fig:not_informative} shows the lowest ranked partitioning variable which is another categorization of world countries. This Group variable produces similar partitions to that of the GDP variable but it isolates the clump of countries in Europe with low birth rates that together do not have a monotonic pattern. This small multiple is interesting but at the cost of parsimony.
 
@@ -59,6 +60,7 @@ Figure~\ref{fig:not_informative} shows the lowest ranked partitioning variable w
 \subsection{Support}
 Our third criterion for good small multiple displays is that they have patterns that are well-supported by the data. This property is incorporated into our approach through the use of the z-score normalization which adjusts for the variability in the ``null distributions" of the randomized cognostic scores. If the data set is small or there are outliers in the data set, this distribution will have high variance, which will downweight the resulting z-scores.
 
+Consider the distributions shown in Figure~\ref{fig:informative_sm_big}, particularly the ``Marxist" partition with only five data points. Given the width of the distribution, it is far less likely that a particular true score computed on a component plot will be significantly different from the mean, making it less likely that the particular small multiple would be ranked high.
 \begin{figure}
 \centering
 \includegraphics[width=3.25in,height=3.25in]{images/support-nogrid.pdf}
@@ -67,8 +69,7 @@ Our third criterion for good small multiple displays is that they have patterns 
 \end{figure}
 
 To examine how our algorithm behaves with different amounts of support, we experiment by varying the size of the input data set. Using the US university data set discussed in the introduction and the Monotonic scagnostic, we compute the z-scores for all the partitioning variables in the dataset. Figure~\ref{fig:support} shows these rankings for different data set sizes, generated by randomly subsetting the full data set.
-As can be seen, for small data sets, the scores are small and, except for ACT scores, there is no clear ranking. The patterns in these small multiple displays are weaker and we correctly require more data to be confident in their ranking. As the data set grows, we become more confident in the rankings with ``Historically Black College'' and ``Carnegie Classification'' separating from the other variables. The highly unbalanced partitions produced by ``Historically Black College'', seen in Figure~\ref{fig:support1}, would weight the larger partition determined by the answer ``No" highly in the z-score computation. With smaller datasets the higher variance in the ``null distributions" would reduce the z-score for both partitions.
-The ``Carnegie Classification'' reveals a strong monotonic pattern in the partition determined by universities with very high research as seen in Figure~\ref{fig:support2}. As this partitioning variable has high cardinality, it produces partitions with low support producing wide ``null distributions" making it less likely that its true scores would be significantly different, especially when the number of points in the datasets is low.
+As can be seen, for small data sets, the scores are small and, except for ACT scores, there is no clear ranking. The patterns in these small multiple displays are weaker and we correctly require more data to be confident in their ranking. As the data set grows, we become more confident in the rankings with ``Historically Black College'', seen in Figure~\ref{fig:support1}, and ``Carnegie Classification'', seen in Figure~\ref{fig:support2}, separating from the other variables.
 
 \begin{figure}
  \centering 
@@ -82,7 +83,7 @@ The ``Carnegie Classification'' reveals a strong monotonic pattern in the partit
 		  \caption{}
 		 \label{fig:support2}
  	\end{subfigure}
-	\caption{(a) Higher support promotes this small multiple defined by the ``Historically Black College" variable as the pattern in the larger partition becomes more important. (b) ``Carnegie Classification'' produces many partitions with low support. Increasing the size of the dataset increases the support of the highly Monotonic pattern raising the rank of this small multiple display.}
+	\caption{(a) Small multiple defined by the ``Historically Black College" variable. (b) Small multiple defined by the ``Carnegie Classification'' variable}
 \end{figure}
 
 
@@ -120,5 +121,5 @@ Our final criteria is parsimony. This criteria is indirectly included in our app
 We illustrate this behavior using an artificially generated dataset so we can hold the visual patterns across partitioning variables equal as far as possible. The input visualization is the bullseye pattern shown in Figure~\ref{fig:pars1}. This artificial data set includes a partitioning variable that cleanly separates the ring from the core as seen in Figure~\ref{fig:pars2}. It also includes two other partitioning variables that also separate the ring and core, but they also further split them into two and four random partitions (Figures~\ref{fig:pars3} and~\ref{fig:pars4}). The separation between the core and ring are equally visible in all three variants, however the first is the most parsimonious---it shows the pattern with the least amount of extraneous information. 
 The Clumpy scagnostic has high values for plots with multiple tight clumps of points such as the original bullseye pattern but low values for plots with just one clump such as those with just the core or just the ring. So random samples of the bullseye pattern will produce a distribution of Clumpy scores that are high but the partitioning variables that split out the core and ring will have Clumpy scores that are much lower.
 
-In the histograms, we can see that the width of the distributions increases as the number of partitions increases. Thus, the computed z-score will be highest for the first partitioning variable. The actual values are $19.507$, $9.274$ and $5.129$ for Figures~\ref{fig:pars2},~\ref{fig:pars3} and~\ref{fig:pars4}. Thus, our approach does prefer more parsimonious partitioning variables.
+In the histograms, we can see that the width of the distributions increases as the number of partitions increases. Thus, the computed z-score will be highest for the first partitioning variable. The actual values are $19.507$, $9.274$ and $5.129$. Thus, our approach does prefer more parsimonious partitioning variables.
 
