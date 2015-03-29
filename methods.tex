@@ -9,7 +9,7 @@ In this section we propose a new method for automatically selecting good small m
 \end{enumerate}
 The output is a scoring of the small multiple displays produced by each partitioning variable.
 
-In the following section, we describe desirable properties for small multiple displays that we use to motivate our approach. The next section describes our method in the context of a running example. We then discuss some straightforward extensions to our basic approach.
+In the following section, we describe desirable properties for small multiple displays that we use to motivate our approach. The next section describes our method in the context of a running example. We then discuss some straightforward extensions to our basic approach. In this paper we focus on small multiples based on scatterplots and scagnostics as our cognostics, but, our method could be applied to other view types such as line charts and appropriate associated cognostics.
 
 \subsection{Goodness-of-Split Criteria}
 To guide our approach, we formulated the following four goodness criteria. Partitioning variables should be chosen such that the resulting small multiple displays are:
@@ -59,7 +59,7 @@ We then compare the true scores to the ``null distributions'' by evaluating a z-
 $$z_i = \frac{(X_i-\mu_i)}{\sigma_i}$$ 
 where $X_i$ is the true score of the $i$-th partition of the $k$ partitions and $\mu_i$ and $\sigma_i$ are the mean and standard deviation of the cognostic measures over the $r$ random permutations for the $i$-th partition.
 
-Finally, to get a score for the whole small multiple display, we use the maximum absolute z-score across all the plots: 
+Finally, to get a score for the whole small multiple display, we use the maximum absolute z-score across all the component plots: 
 $$z = \max_{i=1}^k |z_i|$$ 
 Simply adding the z-scores would not penalize high-cardinality variables that produce many partitions. Similarly, taking the average would reduce the effect outlier scores which are what we want to discover.
 
