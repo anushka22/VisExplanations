@@ -54,6 +54,26 @@
   linktocpage
 }
 
+% Alter some LaTeX defaults for better treatment of figures:
+% See p.105 of "TeX Unbound" for suggested values.
+% See pp. 199-200 of Lamport's "LaTeX" book for details.
+% General parameters, for ALL pages:
+\renewcommand{\topfraction}{0.9}    % max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8} % max fraction of floats at bottom
+% Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4} % 2 may work better
+\setcounter{dbltopnumber}{1} % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9} % fit big float above 2-col. text
+\renewcommand{\textfraction}{0.05}  % allow minimal text w. figs
+% Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}  % require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}   % require fuller float pages
+
+% remember to use [htp] or [htpb] for placement
+ 
 %% If you are submitting a paper to a conference for review with a double
 %% blind reviewing process, please replace the value ``0'' below with your
 %% OnlineID. Otherwise, you may safely leave it at ``0''.
@@ -90,7 +110,7 @@ Justin Talbot is with Tableau Research. E-mail: jtalbot@tableau.com.
 
 %% Abstract section.
 \abstract{
-Small multiple displays are a common approach to visualizing multidimensional data.
+Small multiple displays are a common approach for visualizing multidimensional data.
 To create effective small multiple displays, analysts must select partitioning variables that reveal underlying structure in the data.
 If the number of variables in the data set is large, or if the analyst has limited prior information about the data set, choosing an informative partitioning variable can require substantial trial and error.
 We propose a method to automatically rank the possible partitioning variables in a data set, allowing analysts to focus their effort on the most promising small multiple displays.

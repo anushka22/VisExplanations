@@ -8,27 +8,28 @@ Our first criterion is to prefer small multiple displays that have visually sali
 
 For example, consider the bivariate relationship between linolenic and linoleic in Figure~\ref{fig:vrich_all} from the olive oils dataset~\cite{Forina1983}, which includes eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There appears to be visually striking clumps and striation patterns overlaid. An analyst might wonder whether these patterns can be isolated and explained by any of the other variables in the dataset.
 
-\begin{figure}
+\begin{figure}[t]
  \centering 
 	\includegraphics[width=1.75in]{images/linolenic-linoleic.pdf}
 	  \caption{User-selected bivariate relationship of two chemicals in the Olive oils dataset. }
 	 \label{fig:vrich_all}
 \end{figure}
 
-\begin{figure}
-	\includegraphics[width=3.25in]{images/15_729035813077-region.pdf}
+\begin{figure}[t]
+    \centering
+	\includegraphics[width=3.0in]{images/15_729035813077-region.pdf}
 	  \caption{The highest ranked small multiple on the Striation scagnostic pulls apart the striated patterns from the original bivariate relationship. }
 	 \label{fig:vrich_sm}
 \end{figure}
 
 To do so, the analyst can use our approach with the ``Striation'' scagnostic~\cite{Wilkinson2005} which detects banding of points in a scatterplot. With this cognostic, our approach ranks the ``Region" variable as the best partitioning variable for isolating striated patterns from the $p$ variables in the data set. This is the partitioning shown in the left half of Figure~\ref{fig:vrich_sm}, which reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the distinctive measurement structure of linoleic values for the Umbria region.
 
-As before, the right side of Figure~\ref{fig:vrich_sm} shows the true ``Striation'' scores for this partitioning in blue and the randomized permutation scores in the black histogram. We can see that our algorithm has identified the striated pattern in Liguria west as being very unlikely to have arisen due to chance. The similar pattern in Liguria east is not picked up by our approach due to an issue with the underlying ``Striation'' scagnostic. We revisit this issue in Section~\ref{}.
+As before, the right side of Figure~\ref{fig:vrich_sm} shows the true ``Striation'' scores for this partitioning in blue and the randomized permutation scores in the black histogram. We can see that our algorithm has identified the striated pattern in Liguria west as being very unlikely to have arisen due to chance. The similar pattern in Liguria east is not picked up by our approach due to an issue with the underlying ``Striation'' scagnostic. We revisit this issue in Section~\ref{sec:discussion}.
 
 \subsection{Informative}
 Our second criterion is that we want small multiple displays that reveal informative structures when compared to the original view. This criterion is incorporated in our algorithm by the comparison between the true cognostic score and that of the randomized permutations. Randomly permuting the partitioning variable results in partitions that are random subsets of the data in the original plot. Visual patterns in this random subset are likely to be similar to those in the original plot, and thus, not informative. In contrast, a high absolute z-score for the true cognostic value is associated with a small multiple plot that shows a pattern \emph{different} from the original plot.
 
-\begin{figure}
+\begin{figure}[t]
  \centering 
 	 \begin{subfigure}{1.5in}
 		\includegraphics[width=1.5in]{images/DEATH_RT-BIRTH_RT.pdf}
