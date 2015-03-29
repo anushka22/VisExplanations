@@ -33,8 +33,8 @@ To guide our approach, we formulated the following four goodness criteria. Parti
         \label{fig:method_original}
     \end{subfigure}
     \begin{subfigure}[t]{1.5in}
-  	\includegraphics[width=1.5in]{images/TAX.pdf}
-	\caption{Partitioned by tax rates}
+  	\includegraphics[width=1.5in]{images/DIS.pdf}
+	\caption{Partitioned by mean distance from employment centers}
 	 \label{fig:method_actual}
     \end{subfigure}
     \begin{subfigure}[t]{1.5in}
@@ -44,11 +44,11 @@ To guide our approach, we formulated the following four goodness criteria. Parti
 	 \label{fig:method_random}
     \end{subfigure}
      \begin{subfigure}[t]{2.5in}
- 	\includegraphics[width=2.5in]{images/hist-TAX.pdf}
+ 	\includegraphics[width=2.5in]{images/hist-DIS.pdf}
 	\caption{Distribution of skewness}
 	 \label{fig:method_dist}
      \end{subfigure}
-   \caption{Illustration of our method of evaluating small multiple displays. (a) Input bivariate relationship of interest. (b) Partitions determined by the levels of XX. (c) Randomly permuted partitions of data. (d) Distribution of X measures for randomly permuted partitions. The overlaid blue lines are the corresponding true scores of the partitions determined by XX in (b).}
+   \caption{Illustration of our method of evaluating small multiple displays. (a) Input bivariate relationship of interest. (b) Partitions determined by the mean distance to Boston's five employment centers. (c) Randomly permuted partitions of data. (d) Distribution of Skewed scagnostics for randomly permuted partitions. The overlaid blue lines are the corresponding true scores of the partitions in (b).}
 \end{figure*}
 
 Our approach is based on a simple intuition: effective small multiple displays are those whose component plots have cognostic scores that are very unlikely to have arisen due to chance. In this section, we describe a method for evaluating this likelihood using a \emph{randomized permutation test}, which is a non-parametric statistical significance test. In the following section, we demonstrate that this approach produces results that conform to our given goodness criteria.
@@ -65,11 +65,11 @@ Simply adding the z-scores would not penalize high-cardinality variables that pr
 
 To demonstrate this algorithm, consider the example in Figure~\ref{fig:method_original} showing the relationship between the median value of owner-occupied homes in $\$1000s$ and the proportion of owner-occupied units built prior to 1940. This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston, Massachusetts~\cite{Harrison1978}. We see that as the age of houses increases, their median value decreases and there are more older houses in the Boston area
 
-The analyst might wonder whether any of the other variables in the dataset could partition the view, isolating and explaining the skewness. So, to discover splits that are unusually skewed, the analyst selects the Skewed scagnostic~\cite{Wilkinson2005} as the non-parametric cognostic estimating the density of points in a scatterplot. 
+The analyst might wonder whether any of the other variables in the dataset could partition the view, isolating and explaining the skewness. So, to discover splits that are unusually skewed, the analyst selects the Skewed scagnostic~\cite{Wilkinson2005} as the non-parametric cognostic characterizing the spread of the density of points in a scatterplot. 
 
-Figure~\ref{fig:method_actual} shows the small multiple display resulting from partitioning on the binned measure of the property-tax rate per $\$10,000$. We compute it for each of the six component plots to form the vector of true scores. In the six partitions of equal count~\cite{Becker1996}, we see five that share the skewed pattern in the original view with a larger proportion of houses close to $100$ years old. However, for houses with property tax values in the range of 300--430 we see a dispersed pattern with a lot more houses that are 50--60 years old. Therefore, this variable reveals an informative partitioning of the original view as it diverges from the original.
+Figure~\ref{fig:method_actual} shows the small multiple display resulting from partitioning on the binned weighted mean of the distances to five Boston employment centers. We compute the Skewed scagnostic for each of the six component plots to form the vector of true scores. In the six partitions of equal count~\cite{Becker1996}, we see four that exhibit a skewed pattern as in the original view with a larger proportion of houses close to $100$ years old. However, for houses that are not very close to the employment centers we see a dispersed pattern with no relationship between the age of the house and its value. Therefore, this variable reveals an informative partitioning of the original view as it diverges from the original.
 
-We randomly permute the assignment of data points to the six partitions to produce a partitioning as in Figure~\ref{fig:method_random} where all the partitions look similar to the original bivariate relationship. We again compute cognostic scores for each component plot. Then, we repeat this randomly permuted assignment and score computation to produce a distribution of cognostic scores for each component plot as seen in Figure~\ref{fig:method_dist}. The true scores of the partitioning by the tax rate are overlaid as blue lines to establish a sense of the distance from average scores of random partitionings. We then take the maximum of the z-scores from the partitions which ranks the tax rate variable at the top with a score of $4.144$.
+We randomly permute the assignment of data points to the six partitions to produce a partitioning as in Figure~\ref{fig:method_random} where all the partitions look similar to the original bivariate relationship. We again compute cognostic scores for each component plot. Then, we repeat this randomly permuted assignment and score computation to produce a distribution of cognostic scores for each component plot as seen in Figure~\ref{fig:method_dist}. The true scores of the partitioning by the mean distances to the employment centers are overlaid as blue lines to establish a sense of the distance from average scores of random partitionings. We then take the maximum of the z-scores from the partitions which ranks the small multiple in Figure~\ref{fig:method_actual} at the top with a score of $2.094$.
 
 \subsection{Extensions}
 One advantage to our approach is that it can easily be extended in a number of different ways. For example, our method naturally works on discrete partitioning variables. For continuous variables, discrete partitions can be created through various disjoint binning techniques~\cite{Freedman1981,Scott2009}. Alternatively, overlapping bins (shingles) could also be used~\cite{Becker1996}. In either case, our approach can be extended to handle binning by first permuting the continuous variable and then applying the binning algorithm to partition the data.
