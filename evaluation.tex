@@ -2,44 +2,56 @@
 \label{sec:evaluation}
 In this section, we demonstrate by example that our algorithm satisfies the properties we set up as the goodness-of-split criteria for good small multiple displays.
 
+%\begin{figure}[t]
+% \centering 
+%	\includegraphics[width=1.75in]{images/linolenic-linoleic.pdf}
+%	  \caption{An input scatterplot showing the relationship between two chemicals in the Olive oils dataset. There are strong, overlapping visual patterns in this data that our algorithm should be able to isolate. }
+%	 \label{fig:vrich_all}
+%\end{figure}
+%
+%\begin{figure}[t]
+% \centering 
+%	\includegraphics[width=3.05in]{images/15_729035813077-region.pdf}
+%	  \caption{The highest ranked small multiple display of the olive oils data set using the striation scagnostic. Our algorithm detects that the striation pattern in Liguria west is very unlikely to be due to chance and recommends this small multiple display. }
+%	 \label{fig:vrich_sm}
+%\end{figure}
+
+\begin{figure}[t]
+ \centering
+    \begin{subfigure}{1.05in}
+	\includegraphics[width=1.05in]{images/linolenic-linoleic.pdf}
+	  \caption{Input scatterplot}
+	 \label{fig:vrich_all}
+    \end{subfigure}
+    \begin{subfigure}{2.5in}
+	\includegraphics[width=2.5in]{images/15_729035813077-region.pdf}
+	  \caption{Highest-ranked small multiple display}
+	 \label{fig:vrich_sm}
+    \end{subfigure}
+	\caption{The highest ranked small multiple display of the olive oils data set using the striation scagnostic. Our algorithm detects that the striation pattern in Liguria west is very unlikely to be due to chance and recommends this small multiple display. }
+\end{figure}
 
 \subsection{Visually Rich}
 Our first criterion is to prefer small multiple displays that have visually salient patterns. Our algorithm achieves this by using the input cognostic to measure the presence and extent of a visual pattern in the component plots of a candidate small multiple display. This approach works for arbitrary cognostic measures on any type of visualization, allowing us to create small multiple displays targeted at the interests of the analyst. 
 
 For example, consider Figure~\ref{fig:vrich_all}, which shows the relationship between linolenic and linoleic in the olive oils dataset~\cite{Forina1983}, which includes eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There are visually striking clumps and striation patterns in the data. An analyst might wonder whether these patterns can be isolated and explained by any of the other variables in the dataset.
 
-\begin{figure}[t]
- \centering 
-	\includegraphics[width=1.75in]{images/linolenic-linoleic.pdf}
-	  \caption{An input scatterplot showing the relationship between two chemicals in the Olive oils dataset. There are strong, overlapping visual patterns in this data that our algorithm should be able to isolate. }
-	 \label{fig:vrich_all}
-\end{figure}
-
-\begin{figure}[t]
- \centering 
-	\includegraphics[width=3.05in]{images/15_729035813077-region.pdf}
-	  \caption{The highest ranked small multiple display of the olive oils data set using the striation scagnostic. Our algorithm detects that the striation pattern in Liguria west is very unlikely to be due to chance and recommends this small multiple display. }
-	 \label{fig:vrich_sm}
-\end{figure}
-
 To do so, the analyst can use our approach with Wilkinson et al.'s \emph{striation} scagnostic which detects banding of points in a scatterplot. With this cognostic, our approach ranks the ``Region" variable as the best partitioning variable for isolating striated patterns from the $p$ variables in the data set. This is the partitioning shown in the left half of Figure~\ref{fig:vrich_sm}, which reveals the clean isolation of the striation pattern for olive oils from the Liguria region and the distinctive measurement structure of linoleic values for the Umbria region.
 
 As before, the right side of Figure~\ref{fig:vrich_sm} shows the true striation scores for this partitioning in blue and the randomized permutation scores in the black histogram. We can see that our algorithm has identified the striated pattern in Liguria west as being very unlikely to have arisen due to chance, leading to the top ranking for this small multiple. 
 Note, however, that the striation in Liguria east is not identified as being an outlier. This is because the striation scagnostic itself fails to catch this case. Thus, the visual richness of the small multiples our approach selects depends on the quality of input cognostic, an issue we revisit in the discussion (Section~\ref{sec:discussion}).
 
-\subsection{Informative}
-Our second criterion is that we want small multiple displays that reveal informative structures when compared to the original view. This criterion is incorporated in our algorithm by the comparison between the true cognostic score and that of the randomized permutations. Randomly permuting the partitioning variable results in partitions that are random subsets of the data in the original plot. Visual patterns in these random subsets are likely to be similar to those in the original plot, and thus, not informative. In contrast, a high absolute z-score for the true cognostic value is associated with a small multiple display that shows a pattern \emph{different} from the original plot.
-
 \begin{figure}[t]
  \centering 
-	 \begin{subfigure}{1.5in}
-		\includegraphics[width=1.5in]{images/DEATH_RT-BIRTH_RT.pdf}
+	 \begin{subfigure}{1.15in}
+        \centering
+		\includegraphics[width=1.15in]{images/DEATH_RT-BIRTH_RT.pdf}
 		  \caption{Input scatterplot}
 		 \label{fig:informative_all}
 	\end{subfigure}
 	\begin{subfigure}{3in}
 		\includegraphics[width=3in]{images/9_95670214716782-GDP.pdf}
-		  \caption{Partitioned by the GDP}
+		  \caption{Partitioned by GDP category}
 		 \label{fig:informative}
 	 \end{subfigure}
 	 \begin{subfigure}{3in}
@@ -49,6 +61,9 @@ Our second criterion is that we want small multiple displays that reveal informa
 	 \end{subfigure}
 	  \caption{Our algorithm picks informative small multiple displays that diverge from the user-selected input plot. (a) User-selected relationship between birth and death rates for countries around the world. (b) The highest ranked small multiple display shows partitions that reveal strong opposite trends that were not seen in the original view. (c) The lowest ranked small multiple display that has more partitions with fewer points that look like random subsets of the input plot.}
 \end{figure}
+
+\subsection{Informative}
+Our second criterion is that we want small multiple displays that reveal informative structures when compared to the original view. This criterion is incorporated in our algorithm by the comparison between the true cognostic score and that of the randomized permutations. Randomly permuting the partitioning variable results in partitions that are random subsets of the data in the original plot. Visual patterns in these random subsets are likely to be similar to those in the original plot, and thus, not informative. In contrast, a high absolute z-score for the true cognostic value is associated with a small multiple display that shows a pattern \emph{different} from the original plot.
 
 An illustration of this behavior involves the Ourworld dataset of UN statistics on world countries~\cite{Wilkinson2005GG}. We want to determine how to partition the scatterplot showing the relationship between birth rate and death rate seen in Figure~\ref{fig:informative_all} to isolate the increasing and decreasing trends that seem to be overlaid. So we use the \emph{monotonic} scagnostic~\cite{Wilkinson2005} to find informative small multiples. The highest ranked small multiple is partitioned into two GDP categories, ``Developed" with $30$ points and ``Emerging" with $27$ points, as seen in Figure~\ref{fig:informative}. This partitioning reveals that GDP is a confounding covariate. While the main view shows an overall positive trend between the birth and death rates, the small multiple display shows that in developed regions there is only a strong negative relationship as expected for countries in that category. As shown by the histograms on the right, this informative display arises because the patterns in the small multiple display are substantially different from the patterns we would see in random subsets of the original plot.
 
@@ -93,23 +108,29 @@ The ``Carnegie Classification'' reveals a strong monotonic pattern in the partit
     \centering
     \begin{minipage}[b]{1.7in}
        \begin{subfigure}[b]{\linewidth}
-  	\includegraphics[width=0.75in]{images/donut1-donut2.pdf}
-      \caption{Input generated scatterplot}
+        \centering
+  	\includegraphics[width=0.85in]{images/donut1-donut2.pdf}
+        \vspace{-0.5cm}
+      \caption{Input bullseye scatterplot}
       \label{fig:pars1}
       \end{subfigure}\\[\baselineskip]
       \begin{subfigure}[b]{\linewidth}
   	\includegraphics[width=1.65in]{images/19_5065416601259-cluster.pdf}
+        \vspace{-0.5cm}
       \caption{Bullseye split into 2 partitions}
+        \vspace{0.25cm}
       \label{fig:pars2}
       \end{subfigure}
       \begin{subfigure}[b]{\linewidth}
   	\includegraphics[width=1.65in]{images/9_27395081160431-cluster1.pdf}
+        \vspace{-0.5cm}
         \caption{Bullseye split into 4 partitions}
       \label{fig:pars3}        
       \end{subfigure}
     \end{minipage}
     \begin{subfigure}[b]{1.7in}
 	\includegraphics[width=1.7in]{images/5_12851615653375-cluster2.pdf}
+        \vspace{-0.5cm}
       \caption{Bullseye split into 8 partitions}
       \label{fig:pars4}
     \end{subfigure}
