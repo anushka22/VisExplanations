@@ -8,7 +8,7 @@
     \end{subfigure}
     \begin{subfigure}[t]{1.5in}
   	\includegraphics[width=1.5in]{images/DIS.pdf}
-	\caption{Partitioned by distance to an employment center}
+	\caption{Partitioned by distance to an\\ employment center}
 	 \label{fig:method_actual}
     \end{subfigure}
     \begin{subfigure}[t]{1.5in}
@@ -57,11 +57,11 @@ Our approach is based on a simple intuition: effective small multiple displays a
 
 Our algorithm works by considering each potential partitioning variable individually. For each partitioning variable, we evaluate the cognostic measure on each component plot in the resulting small multiple, resulting in a vector of \emph{true} scores. We then repeatedly randomly permute the values of the partitioning variable, assigning each data point to a random partition, and reevaluate the cognostic score for each component plot. These randomized cognostic scores give us a vector of \emph{simulated null distributions}, capturing how likely different cognostic scores are to arise just by chance for each component plot.
 
-We then compare the true scores to the null distributions by evaluating a z-score. This gives us a normalized measure that indicates how far visual pattern in the true partition is from a random partition. The z-score for each component plot $i$ of the small multiple display is:
+We then compare the true scores to the null distributions by evaluating a z-score. This gives us a normalized measure that indicates how far the visual pattern in the true partition is from a random partition. The z-score for each component plot $i$ of the small multiple display is:
 $$z_i = \frac{(X_i-\mu_i)}{\sigma_i}$$ 
 where $X_i$ is the true cognostic value of the $i$-th partition and $\mu_i$ and $\sigma_i$ are the mean and standard deviation of the cognostic measures over the repeated random permutations of the $i$-th partition. We use a z-score, rather than an order statistic because it is common for the true value to fall well outside the range of the simulated null distribution.
 
-Finally, to get a score for the whole small multiple display, we use the maximum absolute z-score across all the component plots: 
+Finally, to get a score for the whole small multiple display, we use the maximum absolute z-score across all the k component plots: 
 $$z = \max_{i=1}^k |z_i|$$
 Using the maximum results in high scores for small multiple displays that have strong, interesting patterns in at least one component plot. This worked well in our experimentation. However, it may discount small multiple displays with weaker patterns in many or all the component plots. This is discussed more in Section~\ref{sec:discussion}. 
 
@@ -73,4 +73,4 @@ Our algorithm will iterate through the possible partitioning variables scoring e
 However, it is possible that these shifts may have arisen due to random chance. Thus, our algorithm randomly permutes the values of the partitioning variable, producing the small multiple display in Figure~\ref{fig:method_random}. These plots show no sign of the change in skewness and look similar to the original plot. 
 Our algorithm does this repeatedly, producing a distribution of possible random skewness values. The result of this process is shown in Figure~\ref{fig:method_dist}. The black histograms show the distribution of the skewness scagnostic for the random permutations. The blue lines show the skewness scagnostic for the actual variable---the distance to employment center. For the top two plots, the blue line is to the right of the histogram, indicating that the skewness of these two plots is much higher than we would expect to occur by chance. The bottom two have lower skewness than we would expect by chance, but the values are inside the simulated distribution, so there's less evidence for them.
 
-After computing z-scores for these four distributions, we use the maximum absolute z-score as the overall score for this small multiple display. This partitioning variable, distance to employment center, is the highest rated in this data set and would be recommended to the analyst. The small multiple display offers a visual explanation of the relationship between employment center locations to the neighborhoods in Boston---areas with older, lower-valued homes are close to employment centers while newer, higher-valued homes tend to be further away from employment centers. The analyst can see the details of that correlation in the partitions of the display.
+After computing z-scores for these four distributions, we use the maximum absolute z-score as the overall score for this small multiple display. This partitioning variable, distance to employment center, is the highest rated in this data set and would be recommended to the analyst. The small multiple display offers a visual explanation of the relationship between employment center locations to the neighborhoods in Boston---areas with older, lower-valued homes are close to employment centers while newer, higher-valued homes tend to be further away from employment centers. The analyst can see the extent and shape of that correlation in the partitions of the display.
