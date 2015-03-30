@@ -185,6 +185,9 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
                     ncol = cols, nrow = ceiling(numPlots/cols))
   }
+  #bottom, left, top, right
+#  par(mar= c(0,0,0,0))
+  
  if (numPlots==1) {
     print(plots[[1]])
   } else {
@@ -217,28 +220,35 @@ saveTeaserImage <- function(d, partitioner, variables){
 	ggsave(paste0(outputPath,folder,"/teaser2.pdf"), subPlots, height=2, width=5)
 }
 #--------
-saveShingledPartitionData <- function(d, partitioner, variables, scoreName,rankValue, dscores, oscores, pIndices, pLabels){
+saveShingledPartitionData <- function(d, partitioner, variables, varpath, scoreName,rankValue, dscores, oscores, pIndices, pLabels){
+	
+	allPlots <- ggplot(d, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=0.75, alpha=0.5)+ theme(aspect.ratio = 1, axis.title.y=element_text(vjust=1,size=6), axis.text.y=element_text(size=4), axis.text.x=element_text(size=4), axis.title.x=element_text(vjust=0.25, size=6), plot.margin= unit(c(0, 0.5, 0, 0), "lines")) + xlab("Proportion of old homes") + ylab("Median Value") + scale_y_continuous(limits=c(0, 55), breaks=seq(0,50,10)) 
+#	allPlots <- allPlots  + geom_smooth(method='lm') 
+	standard_theme()
+	ggsave(paste0(outputPath,folder,"/", varpath, ".pdf"), allPlots, width=1.3, height=1.3)
+
 	nplots <- dim(pIndices)[1]
-	ht <- 2*length(nplots)
+#	ht <- 1.8*length(nplots)
 	pplots = list()
 	for (i in 1:(nplots-1)){
 		sset = d[pIndices[i,1]:pIndices[i,2],]
 		name = pLabels[i]
-		pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=1, alpha=0.75) + theme(aspect.ratio = 1, plot.margin = unit(c(0,0,0,0), "cm"), axis.title=element_text(size=4), axis.text=element_text(size=5),axis.text.x = element_blank(), axis.title.y=element_text(vjust=1)) + xlab(" ") + ylab("Median Value")
-		if (scoreName %in% c("Rsquared","Pvalue","Slope","Correlation","Monotonic"))
+		pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=0.75, alpha=0.5) + theme(aspect.ratio = 1, plot.margin = unit(c(0.05,-1,0,-1), "cm"),  axis.title.y=element_text(vjust=1,size=6), axis.text.y=element_text(size=4), axis.ticks.x = element_blank(), axis.text.x = element_blank()) + scale_y_continuous(limits=c(0, 55), breaks=seq(0,50,10)) + ylab("Median Value") + xlab(" ")
+		if (scoreName %in% c("Rsquared","Pvalue","Slope","Correlation"))
 			pplots[[name]] <- pplots[[name]]  + geom_smooth(method='lm') 
 	}
 	sset = d[pIndices[nplots,1]:pIndices[nplots,2],]
 	name = pLabels[nplots]
-	pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=1, alpha=0.75) + theme(aspect.ratio = 1, plot.margin = unit(c(0,0,0,0), "cm"), axis.title=element_text(size=4), axis.text=element_text(size=5), axis.title.x=element_text(vjust=0.5), axis.title.y=element_text(vjust=1)) + ylab("Median Value") + xlab("Age")
-	if (scoreName %in% c("Rsquared","Pvalue","Slope","Correlation", "Monotonic"))
+	pplots[[name]] <- ggplot(sset, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=0.75, alpha=0.5) + theme(aspect.ratio = 1, plot.margin = unit(c(0,-1,0,-1), "cm"), axis.title.y=element_text(vjust=1,size=6), axis.text.y=element_text(size=4), axis.text.x=element_text(size=4), axis.title.x=element_text(vjust=0.5, size=6)) + scale_y_continuous(limits=c(0, 55), breaks=seq(0,50,10))+ ylab("Median Value") + xlab("Proportion of old homes")
+	if (scoreName %in% c("Rsquared","Pvalue","Slope","Correlation"))
 		pplots[[name]] <- pplots[[name]]  + geom_smooth(method='lm') 
 
 	standard_theme()
-	ht <- 1.75*length(pLabels)
+	ht <- 5	#1.75*length(pLabels)
 	lout=matrix(1:nplots, ncol=1, byrow=FALSE)
 	fpath=paste0(outputPath,folder,"/",scoreName,"/", partitioner, ".pdf")
-	pdf(fpath, width=2, height=ht)
+#	fpath=paste0(outputPath,folder,"/",scoreName,"/randCluster.pdf")
+	pdf(fpath, width=1.5, height=ht)
 	multiplot(plotlist=pplots, cols=1,layout=lout)
 	dev.off()
 
@@ -260,20 +270,24 @@ saveShingledPartitionData <- function(d, partitioner, variables, scoreName,rankV
 	maxs=ddply(a, partitioner, summarise,N = max(value))
 	notNAs = a[a[[partitioner]] %in% maxs[!is.na(maxs$N),partitioner],]
 	cnts=ddply(notNAs, partitioner, summarise,N = mean(hist(value, plot=F)$counts))
-	maxCnt = max(cnts$N)
-	a[[partitioner]] = factor(a[[partitioner]], levels = pLabels)
+	maxCnt = max(cnts$N)+50
+	cat("maxCnt: " , maxCnt)
+	
+	rLabels = gsub(", ", ",\n", pLabels)
+	levels(a[[partitioner]]) = rLabels
+	levels(oscores[[partitioner]]) = rLabels
 
 	formula =paste(partitioner, "~ .",sep=" ")
 	allHists <- ggplot(a, aes(x=value)) + geom_histogram() 
 	subHists <- allHists + facet_grid(formula, scales="free")
-	subHists <- subHists + geom_vline(data=oscores, aes(xintercept=values), linetype=3, col="blue") + geom_text(data=oscores, aes(x=values,y=maxCnt,label=as.character(round(values,3))), col="blue", size=3) +  theme(axis.title=element_text(size=5), axis.text=element_text(size=4), axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y = element_blank()) + xlab(paste0("Distribution of ",scoreName, " measure"))
+	subHists <- subHists + geom_vline(data=oscores, aes(xintercept=values), linetype=3, col="blue") + geom_text(data=oscores, aes(x=values,y=maxCnt,label=as.character(round(values,3))), col="blue", size=2) +  theme(strip.text.y=element_text(size=5), strip.text.x=element_text(size=5), axis.text.x=element_text(size=5), axis.title.x=element_text(vjust=0.5, hjust=0.5, size=6), axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y = element_blank(), plot.margin= unit(c(0.5, 0, 0.5, 0), "lines"), panel.margin=unit(1.5,"lines")) + xlab(paste0("Distribution of ",scoreName, " measure"))
 
-	ggsave(paste0(outputPath,folder,"/",scoreName,"/hist-", partitioner, ".pdf"), subHists, width=4,height=ht)	
+	ggsave(paste0(outputPath,folder,"/",scoreName,"/hist-", partitioner, ".pdf"), subHists, width=2.5, height=5)	
 
 	pplots[["hists"]] <- subHists
 	lout=matrix(c(1:nplots,rep(nplots+1,nplots)), ncol=2, byrow=FALSE)
 	fpath=paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf")
-	pdf(fpath)
+	pdf(fpath,width=3.5,height=ht)
 	multiplot(plotlist=pplots, cols=2,layout=lout)
 	dev.off()
 }
@@ -282,23 +296,30 @@ saveShingledPartitionData <- function(d, partitioner, variables, scoreName,rankV
 savePartitionData <- function(d, partitioner, variables, scoreName, rankValue, dscores, oscores, varpath, index=""){
 	d[[partitioner]] = as.factor(d[[partitioner]])
 	d[[partitioner]] = factor(d[[partitioner]], levels = mixedsort(levels(d[[partitioner]])))
-	levels(d[[partitioner]])=gsub("\\.", "\n ", levels(d[[partitioner]]))
+	#levels(d[[partitioner]])=gsub("\\.", "\n ", levels(d[[partitioner]]))
+#	levels(d[[partitioner]]) = c("Colleges\nArts & Sciences", "Colleges\nDiverse fields", "Associates\nColleges", "Research\nUniversities", "Universities\nLarge", "Universities\nMedium", "Universities\nSmall", "Universities\nHigh Research", "Universities\nV. High Research")
+#	d[[partitioner]] = as.factor(d[[partitioner]])
+	
+	allPlots <- ggplot(d, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=1, alpha=0.7)+ theme(aspect.ratio = 1, axis.title=element_text(size=6), axis.text=element_text(size=4), axis.title.x=element_text(vjust=0.5), plot.margin= unit(c(0, 0.5, 0, 0), "lines")) + xlab("Death rate") + ylab("Birth rate")
+	#+ xlab("Admission rate") + ylab("Graduation rate")
 
-	#allPlots <- ggplot(d, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=1, alpha=0.7)+ theme(aspect.ratio = 1, axis.title=element_text(size=6), axis.text=element_text(size=4), axis.title.x=element_text(vjust=0.5), plot.margin= unit(c(0, 0, 0, 0), "lines")) xlab("Death rate") + ylab("Birth rate")
 	#---parsimony
-	allPlots <- ggplot(d, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=0.5, alpha=0.7)+ theme(aspect.ratio = 1, axis.title=element_blank(), axis.text=element_blank(), axis.ticks=element_blank(), axis.title.x=element_text(vjust=0.5), plot.margin= unit(c(0, 0, 0, 0), "lines"))
-	if (scoreName %in% c("Rsquared","Pvalue","Slope","Correlation", "Monotonic"))
+	#allPlots <- ggplot(d, aes_string(x=variables[1], y=variables[2])) + geom_point(shape=1, size=0.5, alpha=0.7)+ theme(aspect.ratio = 1, axis.title=element_blank(), axis.text=element_blank(), axis.ticks=element_blank(), axis.title.x=element_text(vjust=0.5), plot.margin= unit(c(0, 0, 0, 0), "lines"))
+	if (scoreName %in% c("Rsquared","Pvalue","Slope","Correlation"))
 		allPlots <- allPlots  + geom_smooth(method='lm') 
 	standard_theme()
-#	ggsave(paste0(outputPath,folder,"/", varpath, ".pdf"), allPlots, width=1.75, height=1.75)
+	ggsave(paste0(outputPath,folder,"/", varpath, ".pdf"), allPlots, width=1.75, height=1.75)
 #	ggsave(paste0(outputPath,folder,"/", varpath, ".pdf"), allPlots, width=0.8, height=0.8)
 
-	formula <- paste(partitioner, "~ .",sep=" ")
-#	subPlots <- allPlots + facet_grid(formula) + geom_point(shape=1, size=1, alpha=0.7)+ theme(plot.margin= unit(c(0.5, -1, 0.5, -0.5), "lines"), strip.background =element_blank(), strip.text.y = element_blank(), aspect.ratio = 1, axis.title=element_text(size=6), axis.text=element_text(size=4)) 
+#	formula <- paste0( "~ ",partitioner)
+	formula <- paste0( partitioner,"~ .")
+	subPlots <- allPlots + facet_grid(formula) + geom_point(shape=1, size=1, alpha=0.7)+ theme(plot.margin= unit(c(0.5, 0, 0.5, 0), "lines"), strip.background =element_blank(), strip.text.y = element_blank(), aspect.ratio = 1, axis.title.x=element_text(size=5), axis.text.x=element_text(size=3),  axis.title.y=element_text(size=5), axis.text.y=element_text(size=3)) 
+#	subPlots <- allPlots + facet_wrap(as.formula(formula),ncol=2) + geom_point(shape=1, size=1, alpha=0.7)+ theme(plot.margin= unit(c(0, 0.5, 0, 0.5), "lines"), strip.text.y = element_text(size=3), strip.text.y = element_blank(), aspect.ratio = 1, axis.title.x=element_text(size=5), axis.text.x=element_text(size=3),  axis.title.y=element_text(size=5), axis.text.y=element_text(size=3)) 
+
 	#---parsimony
-	subPlots <- allPlots + facet_grid(formula) + geom_point(shape=1, size=0.5, alpha=0.5)+ theme(aspect.ratio = 1, axis.title=element_blank(), axis.text=element_blank(), axis.ticks=element_blank(), axis.title.x=element_text(vjust=0.5), plot.margin= unit(c(0, 0, 0, -0.75), "lines"), strip.background =element_blank(), strip.text.y = element_blank())
-#	ht <- 2*length(levels(d[[partitioner]]))
-#	ggsave(paste0(outputPath,folder,"/",scoreName,"/", partitioner, ".pdf"), subPlots, width=2.5,height=ht)	
+	#subPlots <- allPlots + facet_grid(formula) + geom_point(shape=1, size=0.5, alpha=0.5)+ theme(aspect.ratio = 1, axis.title=element_blank(), axis.text=element_blank(), axis.ticks=element_blank(), axis.title.x=element_text(vjust=0.5), plot.margin= unit(c(0, 0, 0, -0.75), "lines"), strip.background =element_blank(), strip.text.y = element_blank())
+	ht <- 3.5 #1.5*length(levels(d[[partitioner]]))
+	ggsave(paste0(outputPath,folder,"/",scoreName,"/", partitioner, ".pdf"), subPlots, width=3.5,height=ht)	
 
 	a = data.frame(cbind(dscores, partitioner=as.character(levels(d[[partitioner]]))))
 	mmin = NULL
@@ -318,25 +339,34 @@ savePartitionData <- function(d, partitioner, variables, scoreName, rankValue, d
 	cnts=ddply(notNAs, partitioner, summarise,N = mean(hist(value, plot=F)$counts))
 	maxCnt = max(cnts$N)+150
 
-	levels(oscores[[partitioner]])=gsub("\\.", "\n ", levels(oscores[[partitioner]]))
-#	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + xlab(paste0("Distribution of ", scoreName," Measure")) + geom_vline(data=oscores, aes_string(xintercept=scoreName), linetype=3, col="blue") + geom_text(data=oscores, aes_string(x=scoreName, y= maxCnt,label=paste0("round(",scoreName,",3)")), col="blue", size=2) + theme(axis.ticks.y = element_blank(), axis.text.y = element_blank(), axis.title.y = element_blank(), strip.text.x = element_text(size=4), axis.title=element_text(size=6), axis.text=element_text(size=4))
-#	subHists <- allHists + facet_grid(formula) + theme(plot.margin= unit(c(0.5, 0, 0.5, 0), "lines")) 
-#	ggsave(paste0(outputPath,folder,"/",scoreName,"/hist-", partitioner, ".pdf"), subHists, width=4,height=ht)	
-#	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,2), heights=c(2.5,2.5))
-#	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=3.5,height=2.5)	
+	levels(oscores[[partitioner]])=gsub("\\.", "\n", levels(oscores[[partitioner]]))
+	levels(oscores[[partitioner]])=gsub(" ", "\n", levels(oscores[[partitioner]]))
+	levels(a[[partitioner]])=gsub("\\.", "\n", levels(a[[partitioner]]))
+	levels(a[[partitioner]])=gsub(" ", "\n", levels(a[[partitioner]]))
+
+#	levels(oscores[[partitioner]]) = c("Colleges\nArts & Sciences", "Colleges\nDiverse fields", "Associates\nColleges", "Research\nUniversities", "Universities\nLarge", "Universities\nMedium", "Universities\nSmall", "Universities\nHigh Research", "Universities\nV. High Research")
+
+	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + xlab(paste0("Distribution of ", scoreName," Measure")) + geom_vline(data=oscores, aes_string(xintercept=scoreName), linetype=3, col="blue") + geom_text(data=oscores, aes_string(x=scoreName, y= maxCnt,label=paste0("round(",scoreName,",3)")), col="blue", size=2) + theme(axis.ticks.y = element_blank(), axis.text.y = element_blank(), axis.title.y = element_blank(), strip.text.x = element_text(size=5), strip.text.y = element_text(size=5), axis.title.x=element_text(size=5), axis.text.x=element_text(size=3))
+	subHists <- allHists + facet_grid(formula) + theme(plot.margin= unit(c(0.5, 0, 0.5, 0), "lines")) 
+	
+#	ht=3
+	ggsave(paste0(outputPath,folder,"/",scoreName,"/hist-", partitioner, ".pdf"), subHists, width=2.5,height=ht)	
+	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.25,1.75), heights=c(ht,ht))
+	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=3,height=ht)	
+
 	#---parsimony
-	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + xlab(paste0("Distribution of ", scoreName," Measure")) + geom_vline(data=oscores, aes_string(xintercept=scoreName), linetype=3, col="blue")+ theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank(), axis.title.x = element_text(size=1), strip.text.x = element_text(size=1))
-	subHists <- allHists + facet_grid(formula) + theme(plot.margin= unit(c(0, 0, 0, -1), "lines")) 
+#	allHists <- ggplot(a, aes(x=value)) + geom_histogram() + xlab(paste0("Distribution of ", scoreName," Measure")) + geom_vline(data=oscores, aes_string(xintercept=scoreName), linetype=3, col="blue")+ theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title.y = element_blank(), axis.title.x = element_text(size=1), strip.text.x = element_text(size=1))
+#	subHists <- allHists + facet_grid(formula) + theme(plot.margin= unit(c(0, 0, 0, -1), "lines")) 
 
 	#---cluster
-	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,1.5), heights=c(1.5,1.5))
-	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=1.5,height=1.5)
+#	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,1.5), heights=c(1.5,1.5))
+#	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=1.5,height=1.5)
 	#---cluster1
-	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,1.5), heights=c(2.5,2.5))
-	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=1.5,height=2.5)
+#	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,1.5), heights=c(2.5,2.5))
+#	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=1.5,height=2.5)
 	#---cluster2
-	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,1.5), heights=c(4.5,4.5))
-	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=1.5,height=4.5)
+#	g <-arrangeGrob(subPlots, subHists, ncol=2, widths=c(1.5,1.5), heights=c(4.5,4.5))
+#	ggsave(paste0(outputPath,folder,"/",scoreName,"/",rankValue,"-", partitioner, ".pdf"), g, width=1.5,height=4.5)
 
 }
 #----------------
@@ -354,7 +384,7 @@ assignToRandomKGroupsBySize <- function(d, ksizes){
 #----------------
 computeShingles <- function(d, partitioner){
 	d=d[complete.cases(d),]
-	z = equal.count(d[[partitioner]])#,overlap=0)
+	z = equal.count(d[[partitioner]],number=4,overlap=0)
 #	plot(z)
 	t=levels(z)
 	s <- sort(d[[partitioner]])
@@ -369,10 +399,11 @@ computeShingles <- function(d, partitioner){
 #----------------
 #----------------
 computeAllShingledScores <- function(d, partitioner, variables, res){
-	scNames = c("scag","msr")	#"msr", "jent",
+	scNames = c("scag")	#"msr", "jent",
 	NumSamples <- 1000
 	varpath = paste(variables[1],variables[2],sep="-")
-	
+	d<- d[order(d[[partitioner]]),]
+
 	for (scoreName in scNames){
 		cat("Computing score: ", scoreName, "\n")
 		#---entropy related prep
@@ -383,6 +414,11 @@ computeAllShingledScores <- function(d, partitioner, variables, res){
 		#---split by known partitioner and save scores
 		pIndices = res$inds
 		pLabels = res$labels
+		for (i in 1:length(pLabels)){
+			ll = pLabels[i]
+			q=as.numeric(unlist(strsplit(unlist(ll), "[^0-9.]+")))
+			pLabels[i] = paste0("[ ",round(q[2],1), ",",round(q[3],1)," ]")
+		}
 		allScores <- getShingledPartitionScores(d, pIndices, pLabels, variables, r1, r2, N, scoreName, partitioner)
 		allScores = as.data.frame(allScores)
 		#---Get known partitioner split sizes
@@ -425,7 +461,7 @@ computeAllShingledScores <- function(d, partitioner, variables, res){
 			zscores[[v]] = replace(zscores[[v]], is.infinite(zscores[[v]]),NA)
 			cat("VAR: ",partitioner,"\nv: " , v, " mean: " ,mu, " sdev ", sdev, " zscore: " , zscores[[v]], "  ", allScores[[v]],"\n")
 			#---save partition + ranking
-			saveShingledPartitionData(d, partitioner, variables, v, zscores[[v]], scores[[v]], allScores[[v]], pIndices, pLabels)
+			saveShingledPartitionData(d, partitioner, variables, varpath, v, zscores[[v]], scores[[v]], allScores[[v]], pIndices, pLabels)
 		}
 	}	#---for scoreName	
 }
@@ -433,7 +469,7 @@ computeAllShingledScores <- function(d, partitioner, variables, res){
 #----------------
 computeAllScores <- function(dall, d, partitioner, variables){
 	scNames = c("scag")	#"msr", "jent",
-	NumSamples <- 1000
+	NumSamples <- 500
 	varpath = paste(variables[1],variables[2],sep="-")
 	
 	for (scoreName in scNames){
@@ -443,7 +479,15 @@ computeAllScores <- function(dall, d, partitioner, variables){
 		r2<- range(dall[[variables[2]]], na.rm=TRUE)
 		N <- nrow(dall)
 		#---Get known partitioner split sizes
-		tab <- table(d[[partitioner]], useNA="ifany")
+		d=d[complete.cases(d),]
+#		tmp=as.character(d[[partitioner]])
+#		d=d[-which(is.na(tmp)),]
+#		t=levels(d[[partitioner]])
+#		levels(d[[partitioner]]) <- levels(d[[partitioner]])[is.na(t)==F]
+		tab <- table(d[[partitioner]])
+		if (0 %in% tab){
+			tab <- tab[-which(tab==0)]
+		}
 		sizes <- sapply(tab, function(x) x[1])
 		cat("SIZES: ",sizes, "\n")
 		#---split by known partitioner and save scores
@@ -556,8 +600,8 @@ computeSupport <- function(vars){
 
 	d <- dall
 	varpath = paste(variables[1],variables[2],sep="-")
-	setName = "msr"
-	scoreName = "Correlation"
+	setName = "scag"
+	scoreName = "Monotonic"
 	NumSamples <- 500
 	nThrows = 10
 	res = data.frame(partitioner=character(), percent=double(), zscore=double(), stringsAsFactors=F)
@@ -632,6 +676,40 @@ computeSupport <- function(vars){
 #	standard_theme_no_grid()
 	standard_theme()
 	ggsave(paste0(outputPath,folder,"/",scoreName,"/support", ".pdf"), g, width=3.5,height=3.5)	
+}
+
+#----------
+computeInformative <- function(vars){
+	df=names(vars)[1]		#---ourworld and Monotonic
+	variables = vars[[df]]
+	fname <- paste0(inputPath, df)
+	dall <- read.csv(fname, header=TRUE)
+	folder <- strsplit(x=df,"\\.")[[1]][1]
+	dir.create(file.path(outputPath, folder), showWarnings = FALSE)
+
+	dfactors <- sapply(dall, is.factor)
+	partitioners <- names(dall[dfactors])
+	partitioners=partitioners[-1]
+	for (partitioner in partitioners){
+		d <- dall[,c(variables,partitioner)]
+		computeAllScores(dall, d, partitioner, variables)
+	}
+}
+#----------
+computeInformative <- function(vars){
+	df=names(vars)[1]		#---ourworld + care about Monotonic
+	variables = vars[[df]]
+	fname <- paste0(inputPath, df)
+	dall <- read.csv(fname, header=TRUE)
+	folder <- strsplit(x=df,"\\.")[[1]][1]
+	dir.create(file.path(outputPath, folder), showWarnings = FALSE)
+
+	dfactors <- sapply(dall, is.factor)
+	partitioners <- names(dall[dfactors])
+	for (partitioner in partitioners){
+		d <- dall[,c(variables,partitioner)]
+		computeAllScores(dall, d, partitioner, variables)
+	}
 }
 
 #----------
@@ -744,5 +822,7 @@ computeParsimonius(vars)
 computeVisuallyRich(vars)
 
 computeSupport(vars)
+
+computeInformative(vars)
 
 }
