@@ -3,18 +3,18 @@
 
 In this section we propose a new method for automatically selecting good small multiple displays. Our approach takes three inputs from the analyst:
 \begin{enumerate}
-\item a visualization which the user wants to partition into a small multiple display,
-\item a \textit{cognostic}~\cite{Tukey1982,Tukey1985} defined on this visualization type that measures the presence or absence of a visual pattern of interest to the user, and
+\item a scatterplot which the user wants to partition into a small multiple display,
+\item a scagnostic that measures the presence or absence of a visual pattern of interest to the user, and
 \item a list of potential partitioning variables.
 \end{enumerate}
 The output is a scoring of the small multiple displays produced by each partitioning variable.
 
-In the following section, we describe desirable properties for small multiple displays that we use to motivate our approach. The next section describes our method in the context of a running example. We then discuss some straightforward extensions to our basic approach. In this paper we focus on small multiples based on scatterplots and scagnostics as our cognostics, but, our method could be applied to other view types such as line charts and appropriate associated cognostics.
+In the following section, we describe desirable properties for small multiple displays that we use to motivate our approach. The next section describes our method in the context of a running example.
 
 \subsection{Goodness-of-Split Criteria}
 To guide our approach, we formulated the following four goodness criteria. Partitioning variables should be chosen such that the resulting small multiple displays are:
 \begin{itemize}
-\item \emph{Visually rich}: We want small multiple displays that convey rich visual patterns, as captured by the cognostic provided by the analyst. In contrast to statistical methods, such as ANOVA, which are based on relatively simple summary metrics with closed-form distributions under some assumptions, most cognostics involve complicated processing and do not follow a known distribution.
+\item \emph{Visually rich}: We want small multiple displays that convey rich visual patterns, as captured by the cognostic provided by the analyst. In contrast to statistical methods, such as ANOVA, which are based on relatively simple summary metrics with closed-form distributions, most cognostics involve complicated processing and do not follow a known distribution.
 
 \item \emph{Informative}: The purpose of a small multiple display is to help explain patterns in the input visualization. We want to prefer partitioning variables that add information to the display, supporting the user in their analysis. Partitions that randomly split the data are not useful since they don't contain any more information than the original plot.
 

@@ -2,30 +2,31 @@
 
 %Exploratory Data Analysis (EDA), championed by Tukey~\cite{Tukey1977}, relies heavily on visual representations in the search for informative and potentially surprising structure in data. Such analysis usually starts with an overview of the data dimensions of interest and follows a path of progressive refinement getting more focused or detailed based on the question being asked.
 
-Understanding multidimensional data sets is a common challenge in Exploratory Data Analysis~\cite{Tukey1977}. Many techniques have been proposed for visualizing multidimensional data in 2D. Perhaps the two most common techniques are \emph{projective displays}, such as scatterplot matrices (SPLOMs), which use a set of 2D projections and \emph{small multiple displays} (also called collections or trellis displays)~\cite{Bertin1983, tufte1986, Becker1996}, which show 2D slices created by partitioning on one or more variables in the data set.
+Understanding multidimensional data sets is a common challenge in Exploratory Data Analysis~\cite{Tukey1977}. Many techniques have been proposed for visualizing multidimensional data in 2D. Perhaps the two most common techniques are \emph{projective displays}, such as scatterplot matrices (SPLOMs), which consist of a set of 2D projections, and \emph{small multiple displays} (also called collections or trellis displays)~\cite{Bertin1983, tufte1986, Becker1996}, which show 2D slices created by partitioning on one or more variables in the data set.
 
-Unfortunately, as the number of variables in the data set grows, neither approach scales well since the number of plots that must be displayed increases quickly. This problem can be addressed by showing only the subset of ``interesting" variables. However, if the user does not know a priori which variables might be of interest, this can become a time-consuming exercise in trial and error as the user manually iterates through variables to find views that help explain their data. 
+Unfortunately, as the number of variables in the data set grows, neither approach scales well since the number of plots that must be displayed increases quickly. This problem can be addressed by showing only the subset of ``interesting" variables. However, if the user does not know a priori which variables might be of interest, finding them can become a time-consuming exercise in trial and error as the user manually iterates through variables to find views that help explain their data. 
 
-In the context of projective displays, there has been substantial work in developing algorithms to automate this process~\cite{Seo2005,Wilkinson2005,Sips2009}.
-Perhaps the most well-known is Scagnostics~\cite{Tukey1985}, introduced by John and Paul Tukey, which uses a set of metrics capturing interesting visual patterns to rank the scatterplots in a SPLOM. Users are also guided to potentially useful projections of their data, that are linear combinations of variables, via dimensionality reduction techniques~\cite{Friedman1974,Yang2003,Sedlmair2013}.
-However, there has been little corresponding work in the automatic selection of partitioning dimensions for small multiple displays. In this paper, we address this problem.
+In the context of projective displays, there has been substantial work in developing algorithms to automate this process. John and Paul Tukey suggested the development of \emph{cognostics}, visualization metrics that permit computers to ``judge the relative interest of different displays"~\cite{Tukey1985}. Perhaps the best known of these are \emph{scagnostics}, cognostics designed to help find interesting scatterplots in a SPLOM.
+%Users are also guided to potentially useful projections of their data, that are linear combinations of variables, via dimensionality reduction techniques~\cite{Friedman1974,Yang2003,Sedlmair2013}.
+However, there has been little corresponding work in the automatic selection of interesting partitioning dimensions for small multiple displays. In this paper, we address this problem.
 
 %Dividing data between views, in small multiple displays, encodes the association between the subset of data observations in a partition using spatial proximity, which impacts the patterns that are visible.
-For example, consider the scatterplot shown in Figure~1(a) which shows the surprisingly complex relationship between acceptance and graduation rates at US universities~\cite{IPEDS}. As shown in Figure~1(b), a small multiple display partitioned on the average ACT score for admits at each university helps explain this pattern.
+To motivate our work, consider the scatterplot shown in Figure~1(a) which shows the surprisingly complex relationship between acceptance and graduation rates at US universities~\cite{IPEDS}. As shown in Figure~1(b), a small multiple display partitioned on aggregate ACT scores for admits at each university helps explain this pattern.
 For universities with low ACT scores, the graduation rate is low regardless of the admission rate.
 For universities with middle ACT scores, the relationship is roughly Gaussian.
 And for universities with very high ACT scores, there is a nearly linear relationship between the acceptance rate and the graduation rate.
 Thus, the relationship between acceptance and graduation rates is strongly mediated by ACT score.
-Our goal is to devise a method that examines the variables in a data set and automatically recommends ones, such as the average ACT score in this example, that can be used to create effective small multiple displays.
+Our goal is to devise a method that examines the variables in a data set and automatically recommends ones, such as the ACT score in this example, that can be used to create effective small multiple displays.
 
 %Choosing partitioning variables for small multiple displays is closely related to the problem of choosing conditioning variables for a statistical model. However, such approaches often use relatively simple closed form models that do not capture the richness of visual patterns in visualizations. Instead, we propose using a non-parametric permutation test approach to  to determine the significance of the resulting collection of data partitions we call a Split.
 
 In this paper, we:
 \begin{itemize}
-    \item Describe a set of goodness criteria for small multiple displays.
-    \item Develop a method for quantitatively evaluating the quality of partitioning variables based on a randomized, non-parametric permutation test. This allows us to incorporate a wide range of existing quality measures for single visualizations, while accounting for natural variation in the data.
-    \item Demonstrate that our method selects small multiple displays that meet our goodness criteria.
+    \item describe a set of goodness criteria for evaluating small multiple displays,
+    \item develop a method for measuring the quality of partitioning variables based on a randomized, non-parametric permutation test which allows us to incorporate a wide range of existing cognostics for single visualizations, while accurately adjusting for their sensitivity, and
+    \item demonstrate that our method selects small multiple displays that meet our goodness criteria.
 \end{itemize}
+We focus in this paper on small multiples based on scatterplots and use scagnostics as our cognostics, but our method could be applied to other view types by using corresponding cognostics.
 
-The next section summarizes related work on small multiples and non-parametric approaches in visualization. This is followed by a description of the method we propose to rank good small multiple displays. Then, we validate how our method complies with the set of goodness criteria for these displays. Finally, we discuss future work and draw conclusions from this research.
+The next section summarizes related work on small multiples, cognostics, and non-parametric approaches in visualization. This is followed by a description of the method we propose to rank good small multiple displays. Then, we validate how our method complies with the set of goodness criteria for these displays. Finally, we discuss future work and draw conclusions from this research.
 
