@@ -1,3 +1,31 @@
+
+\begin{figure*}
+ \centering 
+    \begin{subfigure}[t]{1.45in}
+        \includegraphics[width=1.45in]{images/AGE-MEDV.pdf}
+        \caption{Input scatterplot}
+        \label{fig:method_original}
+    \end{subfigure}
+    \begin{subfigure}[t]{1.5in}
+  	\includegraphics[width=1.5in]{images/DIS.pdf}
+	\caption{Partitioned by distance to an employment center}
+	 \label{fig:method_actual}
+    \end{subfigure}
+    \begin{subfigure}[t]{1.5in}
+ 	 \includegraphics[width=1.5in]{images/randCluster.pdf}
+     \vspace{-0.37cm}
+ 	 \caption{Partitioned by random permutation}
+	 \label{fig:method_random}
+    \end{subfigure}
+     \begin{subfigure}[t]{2.5in}
+ 	\includegraphics[width=2.5in]{images/hist-DIS.pdf}
+	\caption{Distribution of skewness}
+	 \label{fig:method_dist}
+     \end{subfigure}
+   \caption{Illustration of our method of evaluating small multiple displays. (a) The input scatterplot of interest. (b) Partitions determined by the mean distance to Boston's five employment centers. (c) Randomly permuted partitions of data. (d) Distribution of Skewed scagnostics for the randomly permuted partitions. The overlaid blue lines are the corresponding true scores of the partitions in (b). The blue lines are outliers, indicating that they likely did not arise due to chance. Our algorithm will score the small multiple display in (b) highly.}
+\end{figure*}
+
+
 \section{Method}
 \label{sec:method}
 
@@ -25,56 +53,24 @@ To guide our approach, we formulated the following four goodness criteria. Parti
 
 \subsection{Algorithm}
 
-\begin{figure*}
- \centering 
-    \begin{subfigure}[t]{1.45in}
-        \includegraphics[width=1.45in]{images/AGE-MEDV.pdf}
-        \caption{Input plot}
-        \label{fig:method_original}
-    \end{subfigure}
-    \begin{subfigure}[t]{1.5in}
-  	\includegraphics[width=1.5in]{images/DIS.pdf}
-	\caption{Partitioned by mean distance from employment centers}
-	 \label{fig:method_actual}
-    \end{subfigure}
-    \begin{subfigure}[t]{1.5in}
- 	 \includegraphics[width=1.5in]{images/randCluster.pdf}
-     \vspace{-0.37cm}
- 	 \caption{Random partitions}
-	 \label{fig:method_random}
-    \end{subfigure}
-     \begin{subfigure}[t]{2.5in}
- 	\includegraphics[width=2.5in]{images/hist-DIS.pdf}
-	\caption{Distribution of skewness}
-	 \label{fig:method_dist}
-     \end{subfigure}
-   \caption{Illustration of our method of evaluating small multiple displays. (a) Input bivariate relationship of interest. (b) Partitions determined by the mean distance to Boston's five employment centers. (c) Randomly permuted partitions of data. (d) Distribution of Skewed scagnostics for randomly permuted partitions. The overlaid blue lines are the corresponding true scores of the partitions in (b).}
-\end{figure*}
+Our approach is based on a simple intuition: effective small multiple displays are those whose component plots have cognostic scores that are very unlikely to have arisen due to chance. In this section, we describe a method for evaluating this likelihood using a \emph{randomized permutation test}, which is a non-parametric statistical significance test.
 
-Our approach is based on a simple intuition: effective small multiple displays are those whose component plots have cognostic scores that are very unlikely to have arisen due to chance. In this section, we describe a method for evaluating this likelihood using a \emph{randomized permutation test}, which is a non-parametric statistical significance test. In the following section, we demonstrate that this approach produces results that conform to our given goodness criteria.
+Our algorithm works by considering each potential partitioning variable individually. For each partitioning variable, we evaluate the cognostic measure on each component plot in the resulting small multiple, resulting in a vector of \emph{true} scores. We then repeatedly randomly permute the values of the partitioning variable, assigning each data point to a random partition, and reevaluate the cognostic score for each component plot. These randomized cognostic scores give us a vector of \emph{simulated null distributions}, capturing how likely different cognostic scores are to arise just by chance for each component plot.
 
-Our algorithm works as follows: for a given partitioning variable, we evaluate the cognostic score on each component plot of the resulting small multiple, resulting in a vector of \emph{true} scores. We then repeatedly randomly permute the values of the partitioning variable, assigning each data point to a random partition, and reevaluate the cognostic score for each component plot. These randomized cognostic scores give us a vector of ``null distributions'', reflecting how likely different cognostic scores are to arise just by chance for each plot.
-
-We then compare the true scores to the ``null distributions'' by evaluating a z-score. This gives us a normalized measure that indicates how far the true cognostic is from that of a random partition. The z-score for each component plot $i$ is as follows:
+We then compare the true scores to the ``null distributions'' by evaluating a z-score. This gives us a normalized measure that indicates how far visual pattern in the true partition is from a random partition. The z-score for each component plot $i$ of the small multiple display is:
 $$z_i = \frac{(X_i-\mu_i)}{\sigma_i}$$ 
-where $X_i$ is the true score of the $i$-th partition of the $k$ partitions and $\mu_i$ and $\sigma_i$ are the mean and standard deviation of the cognostic measures over the $r$ random permutations for the $i$-th partition.
+where $X_i$ is the true cognostic value of the $i$-th partition and $\mu_i$ and $\sigma_i$ are the mean and standard deviation of the cognostic measures over the repeated random permutations of the $i$-th partition. We use a z-score, rather than an order statistic because it is common for the true value to fall well outside the range of the simulated null distribution.
 
 Finally, to get a score for the whole small multiple display, we use the maximum absolute z-score across all the component plots: 
-$$z = \max_{i=1}^k |z_i|$$ 
-Simply adding the z-scores would not penalize high-cardinality variables that produce many partitions. Similarly, taking the average would reduce the effect outlier scores which are what we want to discover.
+$$z = \max_{i=1}^k |z_i|$$
+Using the maximum results in high scores for small multiple displays that have strong, interesting patterns in at least one component plot. This worked well in our experimentation. However, it may discount small multiple displays with weaker patterns in many or all the component plots. This is discussed more in Section~\ref{sec:discussion}. 
 
-To demonstrate this algorithm, consider the example in Figure~\ref{fig:method_original} showing the relationship between the median value of owner-occupied homes in $\$1000s$ and the proportion of owner-occupied units built prior to 1940. This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston, Massachusetts~\cite{Harrison1978}. We see that as the age of houses increases, their median value decreases and there are more older houses in the Boston area
+To demonstrate how this algorithm works, consider the example in Figure~\ref{fig:method_original} showing the relationship between the median value of owner-occupied homes (in thousands of US dollars) and the proportion of owner-occupied units built prior to 1940. This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston, Massachusetts~\cite{Harrison1978}. We see that as the proportion of older houses increases, the median value decreases. However, the distribution is skewed and an analyst may wonder if there is another variable that might reveal more about this relationship.
+To do so, they can run our algorithm using Wilkinson et al.'s \emph{skewness} scagnostic.
 
-The analyst might wonder whether any of the other variables in the dataset could partition the view, isolating and explaining the skewness. So, to discover splits that are unusually skewed, the analyst selects the Skewed scagnostic~\cite{Wilkinson2005} as the non-parametric cognostic characterizing the spread of the density of points in a scatterplot. 
+Our algorithm will iterate through the possible partitioning variables scoring each one. Figure~\ref{fig:method_actual} shows the small multiple display resulting from partitioning on the binned distance to an employment center, one of the variables in the data set. Notice that, in contrast to the original plot, the density of top two plots (representing a shorter distance to an employment center) appears substantially shifted to the right. While the bottom two plots (longer distances to an employment center) are shifted to the left. These differences will result in skewness scores that are substantially different from the original plot. 
 
-Figure~\ref{fig:method_actual} shows the small multiple display resulting from partitioning on the binned weighted mean of the distances to five Boston employment centers. We compute the Skewed scagnostic for each of the six component plots to form the vector of true scores. In the four partitions of equal count~\cite{Becker1996}, we see that the majority of houses near the employment centers tend to be close to $100$ years old and have deprecated in value. As the mean distance to the employment centers increase, there are larger portions of newer houses that are valued higher. From the data one could infer that as neighborhoods of Boston age, the housing value decreases and employment centers are built to serve the demographics of the neighborhood. The partitions going from the top to the bottom of Figure~\ref{fig:method_actual} show a visual pattern that moves from being negatively skewed to positively skewed. Therefore, this variable reveals an informative partitioning of the original view as it show patterns that diverge from the original.
+However, it is possible that these shifts may have arisen due to random chance. Thus, our algorithm randomly permutes the values of the partitioning variable, producing the small multiple display in Figure~\ref{fig:method_random}. These plots show no sign of the change in skewness due to the real variable. 
+Our algorithm does this repeatedly, producing a distribution of possible random skewness values. The result of this process is shown in Figure~\ref{fig:method_dist}. The black histograms show the distribution of the skewness cognostic for the random permutations. The blue lines show the skewness cognostic for the actual variable---the distance to employment center. For the top two plots, the blue line is to the right of the histogram, indicating that the skewness of these two plots is much higher than we would expect to occur by chance. The bottom two have lower skewness than we would expect by chance, but the values are inside the simulated distribution, so there's less evidence for them.
 
-We randomly permute the assignment of data points to the four partitions to produce a partitioning as in Figure~\ref{fig:method_random} where all the partitions look similar to the original bivariate relationship. We again compute cognostic scores for each component plot. Then, we repeat this randomly permuted assignment and score computation to produce a distribution of cognostic scores for each component plot as seen in Figure~\ref{fig:method_dist}. The true scores of the partitioning by the mean distances to the employment centers are overlaid as blue lines to establish a sense of the distance from average scores of random partitionings. We then take the maximum of the z-scores from the partitions which ranks the small multiple in Figure~\ref{fig:method_actual} at the top with a score of $3.213$.
-
-\subsection{Extensions}
-One advantage to our approach is that it can easily be extended in a number of different ways. For example, our method naturally works on discrete partitioning variables. For continuous variables, discrete partitions can be created through various disjoint binning techniques~\cite{Freedman1981,Scott2009}. Alternatively, overlapping bins (shingles) could also be used~\cite{Becker1996}. In either case, our approach can be extended to handle binning by first permuting the continuous variable and then applying the binning algorithm to partition the data.
-
-While we frame our algorithm in terms of scoring single variables, it is trivial to combine two discrete variables into a new discrete variable by crossing or nesting the levels of each variables~\cite{Wilkinson2005GG,Stolte2002}. Doing so would allow our algorithm to consider combinations of variables. However, unlike powerful statistical variable selection techniques, such as lasso regression, this approach is relatively ad hoc.
-
-Finally, we have described our algorithm in terms of a permutation test, which ignores sampling error in the data set. This is correct in many common analytic scenarios where the entire population is in the data set. If, however, the user wanted to account for sampling error when scoring small multiple displays, they could instead use bootstrapping to build the null distribution. The structure of the approach would be unchanged.
-
+After computing z-scores for these four distributions, we use the maximum absolute z-score as the overall score for this small multiple display. This partitioning variable, distance to employment center, is the highest rated in this data set.
