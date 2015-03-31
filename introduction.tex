@@ -13,9 +13,9 @@ However, there has been little corresponding work in the automatic selection of 
 %Dividing data between views, in small multiple displays, encodes the association between the subset of data observations in a partition using spatial proximity, which impacts the patterns that are visible.
 To motivate our work, consider the scatterplot shown in Figure~1(a) which shows the surprisingly complex relationship between acceptance and graduation rates at US universities~\cite{IPEDS}. As shown in Figure~1(b), a small multiple display partitioned on aggregate ACT scores for admits at each university helps explain this pattern.
 For universities with low ACT scores, the graduation rate is low regardless of the admission rate.
-For universities with middle ACT scores, the relationship is roughly Gaussian.
+For universities with middle of the range ACT scores, the relationship is roughly Gaussian.
 And for universities with very high ACT scores, there is a nearly linear relationship between the acceptance rate and the graduation rate.
-Thus, the relationship between acceptance and graduation rates is strongly mediated by admit ACT score.
+Thus, the relationship between acceptance and graduation rates is strongly mediated by admit ACT scores.
 Our goal is to devise a method that examines the variables in a data set and automatically recommends ones, such as the ACT score in this example, that create effective small multiple displays.
 
 %Choosing partitioning variables for small multiple displays is closely related to the problem of choosing conditioning variables for a statistical model. However, such approaches often use relatively simple closed form models that do not capture the richness of visual patterns in visualizations. Instead, we propose using a non-parametric permutation test approach to  to determine the significance of the resulting collection of data partitions we call a Split.
