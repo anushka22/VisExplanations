@@ -12,9 +12,9 @@ However, there has been little corresponding work in the automatic selection of 
 
 %Dividing data between views, in small multiple displays, encodes the association between the subset of data observations in a partition using spatial proximity, which impacts the patterns that are visible.
 To motivate our work, consider the scatterplot shown in Figure~1(a) which shows the surprisingly complex relationship between acceptance and graduation rates at US universities~\cite{IPEDS}. As shown in Figure~1(b), a small multiple display partitioned on aggregate ACT scores for admits at each university helps explain this pattern.
-For universities with low ACT scores, the graduation rate is low regardless of the admission rate.
-For universities with middle of the range ACT scores, there is no clear correlation.
-And for universities with very high ACT scores, there is a nearly linear relationship between the acceptance rate and the graduation rate.
+For universities with low ACT scores (in the range 10-20), the graduation rate is low regardless of the admission rate.
+For universities with middle of the range ACT scores (20-30), there is no clear correlation.
+And for universities with very high ACT scores (30-36), there is a nearly linear relationship between the acceptance rate and the graduation rate.
 Thus, the relationship between acceptance and graduation rates is strongly mediated by admit ACT scores.
 Our goal is to devise a method that examines the variables in a data set and automatically recommends ones, such as the ACT score in this example, that create effective small multiple displays.
 
