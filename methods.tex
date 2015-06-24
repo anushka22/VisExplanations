@@ -65,7 +65,7 @@ Finally, to get a score for the whole small multiple display, we use the maximum
 $$z = \max_{i=1}^k |z_i|$$
 Using the maximum results in high scores for small multiple displays that have strong, interesting patterns in at least one component plot. This worked well in our experimentation. However, it may discount small multiple displays with weaker patterns in many or all the component plots. This is discussed more in Section~\ref{sec:discussion}. 
 
-To demonstrate how this algorithm works, consider the dataset
+To demonstrate how this algorithm works, consider a dataset
 collected by the U.S Census Service about housing in the area of Boston, Massachusetts~\cite{Harrison1978}. Figure~\ref{fig:method_original} shows the relationship between the median value of owner-occupied houses (in thousands of US dollars) and the proportion of such houses built prior to 1940. We see that as the proportion of older houses increases, the median value decreases. However, the distribution is skewed and an analyst may wonder if there is another variable that might reveal more about this relationship.
 To do so, they can run our algorithm using Wilkinson et al.'s \emph{Skewed} scagnostic.
 
