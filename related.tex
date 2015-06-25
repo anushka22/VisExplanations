@@ -1,6 +1,6 @@
 \section{Previous Work}
 \label{sec:related}
-Our work draws on previous work in three areas of visualization---small multiple displays, cognostics, and the use of non-parametric statistics to improve visualization.
+Our work draws on previous work in three areas of visualization---small multiple displays, cognostics, and the use of non-parametric statistics to improve visual analytics.
 
 \subsection{Small Multiple Displays}
 Small multiple displays are tables of similar visualizations, where each cell visualizes a subset of the data. Such displays allow viewers to make visual inferences about the conditional impact of the partitioning variable(s). Use of small multiples dates back to the work of economist W. S. Jevons in the 19th century~\cite{Kelley1973} who used them to transform tables of time series data into rich graphical displays. 
@@ -17,11 +17,11 @@ Small multiples can also be employed as a visual layout metaphor in user interfa
 
 Cognostics and scagnostics were first proposed by Tukey and Tukey~\cite{Tukey1982, Tukey1985}. More computationally efficient scagnostics were proposed by Wilkinson et al.~\cite{Wilkinson2005, Wilkinson2008}. Other scagnostics have been developed to capture properties such as cluster separation~\cite{Sedlmair2012, Tatu2009}, class consistency and separation~\cite{Sips2009, Schafer2013}, or statistically-motivated measures~\cite{Kandel2012, Seo2005, Piringer2008}.
 
-Cognostics have also been developed for other plot types. Many authors have suggested measures for parallel coordinate plots~\cite{Ankerst1998, Dasgupta2010, Johansson2009, Yang2003}. Albuquerque et al.~\cite{Albuquerque2010} offer quality measures for radial visualizations, pixel-oriented displays, and table lenses. Schneidewind et al.~\cite{Schneidewind2006} propose Pixnostics, a quality measure based directly on the pixel representation of a visualization. Some measures~\cite{Bertini2006, Cui2006, Yang2003} focus on the level of abstraction, including aggregation, clustering, and sampling in various chart types. For more information on quality measures for visualization, consult the survey by Bertini et al.~\cite{Bertini2011}. 
+Cognostics have also been developed for other plot types. Many authors have suggested quality measures for parallel coordinate plots~\cite{Ankerst1998, Dasgupta2010, Johansson2009, Yang2003}. Albuquerque et al.~\cite{Albuquerque2010} offer  measures for radial visualizations, pixel-oriented displays, and table lenses. Schneidewind et al.~\cite{Schneidewind2006} propose Pixnostics, a cognostic based directly on the pixel representation of a visualization. Some measures~\cite{Bertini2006, Cui2006, Yang2003} focus on the level of abstraction, including aggregation, clustering, and sampling in various chart types. For more information on quality measures for visualization, consult the survey by Bertini et al.~\cite{Bertini2011}. 
 
 Some visual analytic systems leverage these measures to recommend visualizations to their users. For example, ScagExplorer~\cite{Dang2014} applies scagnostics to cluster and filter through large collections of bivariate relationships automatically.
 EvoGraphDice~\cite{Boukhelifa2013} uses evolutionary algorithms and a scagnostics-based fitness function to select interesting linear and non-linear 2D projections.
-AutoVis~\cite{Wills2010} applies scagnostics to make decisions about what to visualize to provide users a first glance at their data, highlighting patterns that statisticians notice when investigating datasets.
+AutoVis~\cite{Wills2010} uses scagnostics to provide users with effective summaries of their data, tuned to highlight patterns that professional statisticians would also identify.
 MacEachren et al.~\cite{Maceachren2003} use conditional entropy to identify pairs of variables in a high-dimensional dataset that are likely to display interesting relationships. These variables are displayed in a matrix of view types. Trelliscope~\cite{Hafen2013} uses scagnostics to organize and filter the large number of panels that result from using a trellis display on complex data.
 
 %It leverages user-specified cognostics~\cite{Tukey1982,Tukey1985}, ``computer guiding diagnostics" or measures of the usefulness of a data view, to sample, filter and sort panels that are potentially interesting to a user. 

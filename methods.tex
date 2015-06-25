@@ -29,33 +29,43 @@
 \section{Method}
 \label{sec:method}
 
-In this section we propose a new method for automatically selecting good small multiple displays. Our approach takes three inputs from the analyst:
+Our algorithm takes three inputs from the analyst:
 \begin{enumerate}
-\item a scatterplot which the user wants to partition into a small multiple display,
-\item a scagnostic that measures the presence or absence of a visual pattern of interest to the user, and
+\item a scatterplot which the analyst wants to partition into a small multiple display,
+\item a scagnostic that measures the presence or absence of a visual pattern of interest to the analyst, and
 \item a list of potential partitioning variables.
 \end{enumerate}
 The output is a scoring of the small multiple displays produced by each partitioning variable.
 
-In the following section, we describe desirable properties for small multiple displays that we use to motivate our approach. The next section describes our method in the context of a running example.
+To motivate our algorithm, we first describe four intuitive criteria for effective small multiple displays. We then describe an algorithm that incorporates these criteria to automatically score potential partitioning variables. 
 
 \subsection{Goodness-of-Split Criteria}
-To guide our approach, we formulated the following four goodness criteria. Partitioning variables should be chosen such that the resulting small multiple displays are:
+We hypothesize that effective small multiple displays conform to the following four criteria:
 \begin{itemize}
-\item \emph{Visually rich}: We want small multiple displays that convey rich visual patterns, as captured by the cognostic provided by the analyst. In contrast to statistical methods, such as ANOVA, which are based on relatively simple summary metrics with closed-form distributions, most cognostics involve complicated processing and do not follow a known distribution.
+\item \emph{Visually rich}: Effective small multiple displays should leverage the capabilities of the human visual system by conveying rich visual patterns. This visual richness is unlikely to be captured by the relatively simple summary statistics used in common analytic methods such as ANOVA.
 
-\item \emph{Informative}: The purpose of a small multiple display is to help explain patterns in the input visualization. We want to prefer partitioning variables that add information to the display, supporting the user in their analysis. Partitions that randomly split the data are not useful since they do not contain any more information than the original plot.
+\item \emph{Informative}: Small multiple displays should be more informative than the input visualization, allowing the analyst to deepen their understanding of the data. Small multiple displays that randomly partition the input data are not useful since they contain no more information than the original plot.
 
-\item \emph{Well-supported}: For some data sets, particularly those with outliers or with a small number of data points, strong visual patterns can occur by chance. These spurious patterns are misleading; they appear informative, but are not. We would like to detect and downweight such  patterns, guiding analysts to more robust results.
+\item \emph{Well-supported}: For some data sets, particularly those with outliers or with a small number of data points, strong visual patterns can occur by chance. These spurious patterns are misleading; they appear informative, but are not. Good small multiple displays should convey robust patterns, guiding analysts to reliable results.
 
-\item \emph{Parsimonious}: A small multiple display with many partitions can be very difficult to read and understand. All things being equal, we want to favor splitting into as few plots as possible, while still providing an informative display.
+\item \emph{Parsimonious}: A small multiple display with many partitions can be very difficult to read and understand. All things being equal, we should favor fewer partitions.
 \end{itemize}
 
 \subsection{Algorithm}
 
-Our approach is based on a simple intuition: effective small multiple displays are those whose component plots have cognostic scores that are very unlikely to have arisen due to chance. In this section, we describe a method for evaluating this likelihood using a \emph{randomized permutation test}~\cite{Good2000}, which is a non-parametric statistical significance test.
+The key insight of this paper is that these four criteria can be achieved using a simple heuristic: effective small multiple displays are those whose component plots have cognostic measures that are very unlikely to have arisen by random subsetting of the input plot. Using cognostics to evaluate the small multiple displays, instead of simple summary measures, ensures that we can find \emph{visually rich} patterns. If those cognostics are different from that of the input plot, then the small multiple is \emph{informative}. If those differences are unlikely to be due to chance, then the small multiple display is \emph{well-supported}. And if there are redundant partitioning variables, the least likely will also be the most \emph{parsimonious}. 
 
-Our algorithm works by considering each potential partitioning variable individually. For each partitioning variable, we evaluate the cognostic measure on each component plot in the resulting small multiple, resulting in a vector of \emph{true} scores the length of the number of component plots or partitions. We then randomly permute the values of the partitioning variable and reevaluate the cognostic score for each component plot resulting from these random partitions. This changes each data point by assigning it to a partition determined by the partitioning variable, at random. This single simulation results in a vector of cognostic scores the length of the number of component plots or partitions. We repeatedly simulate such partitions - the random permutation and cognostics computation step - to produce a vector of \emph{simulated null distributions}, capturing how likely different cognostic scores are to arise just by chance for each component plot.
+The key challenge is in determining the likelihood of a small multiple display's cognostic score since they do not come from a known distribution. In this section, we describe how to compute this likelihood using a \emph{randomized permutation test}~\cite{Good2000}, which is a non-parametric statistical significance test.
+
+Given a partitioning variable to score, we first create its associated small multiple display and then evaluate the cognostic on each of its component plots.
+We then randomly permute the values of the partitioning variable, which results in each data point being reassigned to a random partition. We then reevaluate the cognostic scores on this randomized small multiple display. By repeating this permutation procedure multiple times, we produce distributions of cognostic scores that arise ``by chance''.
+
+We then compare the true cognostics to the random distributions to determine the likelihood of the true cognostics. We need to make a pdf since order statistics don't work. We want this to work on general cognostics which have unknown underlying distributions. Chebyshev's inequality can give us a (very) conservative bound on the likelihood regardless of the underlying distribution. It is inversely related to the z-score, so instead of minimizing the likelihood we can maximize the z-score.
+
+This process tells us how unlikely each component plot of a small multiple is. To get a score for the whole small multiple, we again maximize across the plots.
+
+Maximizing here means that we emphasize small multiple displays with at least one informative, well-supported pattern.
+
 
 We then compare the true scores to the null distributions by evaluating a z-score. This gives us a normalized measure across cognostics as it focuses on the number of standard deviations away from the mean. We use the z-score and Chebyshev's inequality to judge how far the visual pattern in the true partition is from a random partition. The z-score for each component plot $i$ of the small multiple display is:
 $$z_i = \frac{(X_i-\mu_i)}{\sigma_i}$$ 
