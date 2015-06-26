@@ -34,12 +34,35 @@ In this section, we demonstrate by example that our algorithm satisfies our good
 \subsection{Visually Rich}
 Our first criterion is to prefer small multiple displays that have visually salient patterns. Our algorithm achieves this by using the input cognostic to measure the presence and extent of a visual pattern in the component plots of a candidate small multiple display. This approach works for arbitrary cognostic measures on any type of visualization, allowing us to create small multiple displays targeted at the interests of the analyst. 
 
-For example, consider Figure~\ref{fig:vrich_all}, which shows the relationship between linolenic and linoleic in the olive oils dataset~\cite{Forina1983}, which includes eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There are visually striking clumps and striation patterns in the data. An analyst might wonder whether these patterns can be isolated and explained by any of the other variables in the dataset.
+ For the Boston dataset, the example in Section~\ref{sec:method} shows the highest ranked variable (“distance to an employment center”) on the Monotonic scagnostic. The highest ranked partitioning variable changes with the choice of scagnostic – the Outlying scagnostic picks “\% lower status of the population” seen in Figure~\ref{fig:bostonOutlying} and the Clumpy scagnostic picks the boolean variable “close to Chas river” seen in Figure~\ref{fig:bostonClumpy}. These partitioned views reveal different visually salient features about the original view.
+ 
+Consider Figure~\ref{fig:vrich_all}, which shows the relationship between linolenic and linoleic in the olive oils dataset~\cite{Forina1983}, which includes eight chemical measurements on different specimens of olive oil produced in various regions in Italy. There are visually striking clumps and striation patterns in the data. An analyst might wonder whether these patterns can be isolated and explained by any of the other variables in the dataset.
 
 To do so, the analyst can use our approach with Wilkinson et al.'s \emph{Striated} scagnostic which detects banding of points in a scatterplot. With this cognostic, our approach ranks the Region variable as the best partitioning variable for isolating striated patterns from the six remaining variables in the data set. This is the partitioning shown in the left half of Figure~\ref{fig:vrich_sm}, which reveals the clean isolation of the striated pattern for olive oils from the Liguria region and the distinctive measurement structure of linoleic values for the Umbria region.
 
 As before, the right side of Figure~\ref{fig:vrich_sm} shows the true Striated scores for this partitioning in blue and the randomized permutation scores in the black histogram. We can see that our algorithm has identified the striated pattern in Liguria west as being very unlikely to have arisen due to chance, leading to the top ranking for this small multiple display. 
 Note, however, that the striation in Liguria east is not identified as being an outlier. This is because the Striated scagnostic itself fails to catch this case. Thus, the visual richness of the small multiples our approach selects depends on the quality of input cognostic, an issue we revisit in the discussion (Section~\ref{sec:discussion}).
+
+\begin{figure}[t]
+ \centering 
+	 \begin{subfigure}{1.5in}
+        \centering
+		\includegraphics[width=1.5in]{images/CHAS.pdf}
+        \vspace{-0.5cm}
+		  \caption{Partitioned by whether close to Chas river}
+        \vspace{0.25cm}
+		 \label{fig:bostonOutlying}
+	\end{subfigure}
+	 \begin{subfigure}{1.5in}
+		\includegraphics[width=1.5in]{images/LSTAT.pdf}
+        \vspace{-0.5cm}
+		  \caption{Partitioned by \% of population with low status}
+        \vspace{0.25cm}
+		 \label{fig:bostonClumpy}
+	 \end{subfigure}
+	  \caption{The choice of scagnostic changes the ranking of the partitioning variables. (a) The highest  ranked small multiple display for the Outlying scagnostic. (b) The highest ranked small multiple display for the Clumpy scagnostic.}
+\end{figure}
+
 
 \begin{figure}[t]
  \centering 
